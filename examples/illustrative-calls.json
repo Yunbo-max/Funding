@@ -1,0 +1,43 @@
+[
+  {
+    "id": "DEMO-NOT-REAL-2027",
+    "round": "2027-demo",
+    "title": "DEMONSTRATION ONLY — no real funding call",
+    "funder": "Fictional Example Foundation",
+    "official_url": "https://example.org/fictional-funding",
+    "verified_at": null,
+    "call_status": "unknown",
+    "routes": [
+      "independent",
+      "new_pi"
+    ],
+    "scope_terms": [
+      "research AI agents"
+    ],
+    "salary_support": "unknown",
+    "requirements": {
+      "requires_host": true,
+      "requires_new_pi": false,
+      "requires_phd_submission_by": null,
+      "requires_phd_award_by": null,
+      "eligible_residence_countries": [],
+      "internal_deadline_status": "unknown",
+      "manual_gate_status": "unknown"
+    },
+    "deadlines": {
+      "funder": null,
+      "internal": null
+    },
+    "evidence": [],
+    "sections": [
+      {
+        "id": "summary",
+        "required": true,
+        "max_words": 250
+      }
+    ],
+    "required_documents": [
+      "cv"
+    ]
+  }
+]
