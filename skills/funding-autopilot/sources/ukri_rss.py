@@ -13,7 +13,7 @@ from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlparse
-from urllib.request import Request, urlopen
+from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 FEED = 'https://www.ukri.org/opportunity/feed/'
 ALLOWED_HOSTS = {'www.ukri.org', 'ukri.org'}
@@ -53,12 +53,17 @@ def valid_ukri_url(value: str) -> str:
     return parsed.geturl()
 
 
+class OfficialOnlyRedirect(HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        valid_ukri_url(newurl)  # reject before contacting a redirect target
+        return super().redirect_request(req, fp, code, msg, headers, newurl)
+
 def get_bytes(url: str, timeout: int = 10):
     valid_ukri_url(url)
     req = Request(url, headers={'User-Agent': 'FundingAutopilot/0.2 (research funding discovery; no bulk scraping)',
                                 'Accept': 'application/rss+xml,application/xml,text/html;q=0.8'})
-    with urlopen(req, timeout=timeout) as response:
-        valid_ukri_url(response.geturl())  # do not follow a redirect into an outside domain
+    with build_opener(OfficialOnlyRedirect()).open(req, timeout=timeout) as response:
+        valid_ukri_url(response.geturl())
         body = response.read(MAX_BYTES + 1)
         if len(body) > MAX_BYTES:
             raise ValueError('official response exceeded conservative size limit')
