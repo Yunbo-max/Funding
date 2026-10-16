@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import importlib.util
 import json
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -14,7 +16,7 @@ from urllib.parse import urlparse
 import funding
 import pipeline
 
-VERSION = '0.3.0'
+VERSION = '0.4.0'
 
 
 def moment():
@@ -312,69 +314,220 @@ def rank(args, root):
             'warning': 'Eligibility is conditional on independent official rule and institutional review; fit is NOT acceptance probability.'}
 
 
-def apply(args, root):
-    profile = profile_at(root)
+def application_directory(root, key, route):
+    """Never derive output paths from a funder title or third-party text."""
+    if not re.fullmatch(r'call-[a-f0-9]{20}', key or ''):
+        raise ValueError('Application key must be a canonical call key')
+    if route not in {'independent', 'new_pi'}:
+        raise ValueError('Route must be independent or new_pi')
+    path = root / 'applications' / key / route
+    pipeline.require_private(path)
+    return path
+
+
+def validated_route(profile, record, route, verb):
     if not profile.get('fields_verified'):
-        raise ValueError('Complete setup-review and setup-confirm before application drafting')
-    path = root / 'ledger.json'
-    state = pipeline.load_state(path)
-    record = state['calls'].get(args.key)
-    if not record:
-        raise ValueError('Call not found; select a ranked funding opportunity')
-    # Reassess to catch updated deadlines, changed profile and stale source records.
-    result = funding.assess(profile, record['call'], args.route, moment())
-    record['evaluations'][args.route] = result
+        raise ValueError('Complete setup-review and setup-confirm before personal application work')
+    result = funding.assess(profile, record['call'], route, moment())
+    record['evaluations'][route] = result
     if result['status'] not in {'eligible', 'conditional'}:
-        raise ValueError('Cannot draft a call with status ' + result['status'] + ': ' + '; '.join(result['reasons']))
-    if funding.call_source_problems(record['call'], moment()):
-        raise ValueError('The full current-round official guidance must be structured before drafting')
-    if record.get('route') and record['route'] != args.route:
-        raise ValueError('Application already assigned to another route')
-    app_dir = root / 'applications' / args.key / args.route
-    proposal = app_dir / 'proposal.md'
-    if proposal.exists():
-        return {'status': 'draft_exists_not_overwritten', 'path': str(proposal),
-                'route_eligibility': result['status'], 'next': 'Continue writing and run independent review'}
-    # Local deterministic stage transitions. No submission or claim of approval occurs here.
+        raise ValueError(f'Cannot {verb} a call with status {result["status"]}: ' +
+                         '; '.join(result['reasons']))
+    problems = funding.call_source_problems(record['call'], moment())
+    if problems:
+        raise ValueError('Specific current-round official evidence is missing/stale: ' +
+                         '; '.join(problems))
+    if record.get('route') and record['route'] != route:
+        raise ValueError('Existing application uses another route; do not silently change host/PI')
+    return result
+
+
+def prepare(args, root):
+    """Create an application strategy workspace, NOT a research proposal draft."""
+    profile = profile_at(root)
+    ledger_path = root / 'ledger.json'
+    state = pipeline.load_state(ledger_path)
+    record = state['calls'].get(args.key)
+    if record is None:
+        raise ValueError('Funding call not found. Run /search and /match first')
+    assessment = validated_route(profile, record, args.route, 'prepare')
+    folder = application_directory(root, args.key, args.route)
+    plan_path = folder / 'preparation.json'
+    if record['stage'] in {'preparing', 'prepared'} and plan_path.exists():
+        return {'status': 'preparation_in_progress' if record['stage'] == 'preparing' else 'prepared',
+                'plan': str(plan_path), 'preparation_guide': str(folder / 'preparation.md'),
+                'next': 'Finish the plan and use prepare-complete --confirm-reviewed before /apply'}
+    if record['stage'] not in {'discovered', 'shortlisted', 'selected'}:
+        raise ValueError('Application stage does not permit starting a new preparation')
     if record['stage'] == 'discovered':
         pipeline.advance(state, args.key, 'shortlisted')
     if record['stage'] == 'shortlisted':
         pipeline.advance(state, args.key, 'selected', route=args.route)
-    if record['stage'] == 'selected':
-        pipeline.advance(state, args.key, 'drafting', route=args.route)
-    if record['stage'] != 'drafting':
-        raise ValueError('Selected call is not in a draftable stage')
-    app_dir.mkdir(parents=True, exist_ok=True)
-    funding.prepare(record['call'], proposal, moment())
-    lines = ['# Compliance and host checklist', '', '**Not submitted. Official office review required.**', '',
-             '- [ ] Full current-round call guidance re-read',
-             '- [ ] Applicant role and actual PhD milestone confirmed',
-             '- [ ] Correct host institution and internal deadline confirmed',
-             '- [ ] Eligible salary and budget categories checked',
-             '- [ ] Every factual claim traced to a source',
-             '- [ ] Word/page/character limits of exact funder form satisfied',
-             '- [ ] Applicant and required PI/host explicitly approve before submission', '']
-    (app_dir / 'requirements.md').write_text('\n'.join(lines), encoding='utf-8')
+    pipeline.advance(state, args.key, 'preparing', route=args.route)
+    folder.mkdir(parents=True, exist_ok=True)
+    sections = [sec for sec in (record['call'].get('sections') or []) if sec.get('required', True)]
+    if not sections:
+        raise ValueError('The scheme has no verified required application sections; review guidance')
+    plan = {'schema_version': '0.4', 'call_key': args.key, 'call_id': record['call']['id'],
+            'round': record['call']['round'], 'route': args.route,
+            'cv_sha256': profile['cv_sha256'],
+            'official_call_checked_at': record['call'].get('verified_at'),
+            'status': 'needs_strategy_and_user_review',
+            'research_question': '', 'distinctive_approach': '', 'feasibility_and_evaluation': '',
+            'evidence_fact_ids': [],
+            'section_outlines': {section['id']: '' for section in sections},
+            'host_plan': {'role': args.route, 'host_or_pi': 'pending_user_confirmed_contact',
+                          'approval': 'pending_or_not_required'},
+            'budget_plan': {'salary_mechanism': 'to_confirm', 'costing_basis': 'to_confirm',
+                            'institution_approval': 'pending_or_not_required'},
+            'research_risks': [], 'unresolved_requirements': [],
+            'applicant_reviewed': False}
+    save(plan_path, plan)
+    checklist = ['# Preparation checklist', '', '**PREPARATION ONLY — no application drafted or submitted.**', '',
+                 '- [ ] CV facts and publications accurately linked to research plan',
+                 '- [ ] Verify current call, funder and receiving institution internal deadline',
+                 '- [ ] Choose a specific scientific question and plausible method',
+                 '- [ ] Map each assessment criterion to evidence and a proposal section',
+                 '- [ ] Select independent vs new PI/host route and seek consent if necessary',
+                 '- [ ] Check allowable salary, budget, fEC, matched funds and eligible costs',
+                 '- [ ] List needed letters, ethics/data/security documents and endorsements',
+                 '- [ ] Review risks and resource/time feasibility',
+                 '- [ ] Applicant confirms this plan before /apply', '',
+                 '## Required form fields', '']
+    for section in sections:
+        checklist.append(f'- [ ] {section["id"]} — max words: {section.get("max_words", "verify limit")}')
+    (folder / 'requirements.md').write_text('\n'.join(checklist) + '\n', encoding='utf-8')
+    (folder / 'preparation.md').write_text(
+        '# Funding preparation — ' + str(record['call'].get('title') or record['call']['id']) + '\n\n'
+        + '**Working strategy; NOT a proposal and NOT submitted.**\n\n'
+        + '**Official call:** ' + str(record['call']['official_url']) + '\n\n'
+        + '**Funding route:** ' + args.route + '\n\n'
+        + '**Eligibility state:** ' + assessment['status'] + '\n\n'
+        + '## What we should propose\n\n[EVIDENCE NEEDED: research question and specific aims]\n\n'
+        + '## Why the applicant can deliver it\n\n[EVIDENCE NEEDED: CV-backed contributions and papers]\n\n'
+        + '## Research programme\n\n[EVIDENCE NEEDED: methodology, baselines, evaluation, milestones and risks]\n\n'
+        + '## Host / PI and budget\n\n[HOST APPROVAL REQUIRED when applicable]\n\n'
+        + '## Funder criteria → planned proposal sections\n\n'
+        + '\n'.join(f'- **{section["id"]}**: [TO CONFIRM: purpose, evidence, word limit]'
+                    for section in sections) + '\n\n'
+        + '## Materials still needed\n\n[TO CONFIRM: letters, budgets, ethics, data and other annexes]\n',
+        encoding='utf-8')
     if args.route == 'new_pi':
-        (app_dir / 'pi-outreach-draft.md').write_text(
-            '# Email draft — DO NOT SEND AUTOMATICALLY\n\n'
-            'Subject: Research collaboration and funding opportunity\n\n'
+        (folder / 'pi-outreach-draft.md').write_text(
+            '# Outreach email — draft only; NOT SENT\n\n'
+            'Subject: Potential research collaboration and funding proposal\n\n'
             'Dear Professor [TO CONFIRM],\n\n'
-            'I am exploring [EVIDENCE NEEDED: project and call] and would welcome a discussion '
-            'about whether our research interests align. The proposed role, salary mechanism, '
-            'host commitments and deadlines would all need to be agreed before applying.\n\n'
-            'Best regards,\n[TO CONFIRM]\n', encoding='utf-8')
-    save(app_dir / 'application.json', {'call_key': args.key, 'call_id': record['call']['id'],
-        'round': record['call']['round'], 'route': args.route,
-        'eligible_status_at_drafting': result['status'], 'cv_hash': profile['cv_sha256'],
-        'status': 'drafting_not_submitted', 'source_url': record['call']['official_url'],
-        'created_at': moment().isoformat(), 'reviewed_by_user': False})
-    save(path, state)
-    return {'status': 'concept_only' if result['status'] == 'conditional' else 'draft_scaffold_created',
-            'proposal': str(proposal), 'requirements': str(app_dir / 'requirements.md'),
-            'pi_outreach': str(app_dir / 'pi-outreach-draft.md') if args.route == 'new_pi' else None,
-            'next': 'Use the AI host to write source-supported narrative, then reviewer + form/PDF audit. Never auto-submit.'}
+            'I am interested in exploring [EVIDENCE NEEDED: aligned research question] '
+            'through [TO CONFIRM: specific official funding opportunity]. '
+            'Could we discuss a possible collaboration, hosting arrangement, '
+            'PI eligibility and whether the scheme could support my role?\n\n'
+            'Best regards,\n[TO CONFIRM: applicant name]\n', encoding='utf-8')
+    save(ledger_path, state)
+    return {'status': 'preparation_started', 'route_eligibility': assessment['status'],
+            'plan': str(plan_path), 'preparation_guide': str(folder / 'preparation.md'),
+            'checklist': str(folder / 'requirements.md'),
+            'pi_outreach': str(folder / 'pi-outreach-draft.md') if args.route == 'new_pi' else None,
+            'next': 'Have the AI fill the research plan using verified sources; review and run prepare-complete.'}
 
+
+def prepare_complete(args, root):
+    """Record a substantive, source-linked preparation after human review."""
+    if not args.confirm_reviewed:
+        raise ValueError('Preparation needs explicit applicant confirmation (--confirm-reviewed)')
+    profile = profile_at(root)
+    state_path = root / 'ledger.json'
+    state = pipeline.load_state(state_path)
+    record = state['calls'].get(args.key)
+    if record is None or record['stage'] != 'preparing':
+        raise ValueError('Start /prepare before completing its reviewed plan')
+    route = record.get('route')
+    validated_route(profile, record, route, 'complete preparation for')
+    folder = application_directory(root, args.key, route)
+    path = folder / 'preparation.json'
+    plan = funding.read_json(path)
+    if any(plan.get(field) != expected for field, expected in {
+        'call_key': args.key, 'call_id': record['call']['id'],
+        'round': record['call']['round'], 'route': route,
+        'cv_sha256': profile['cv_sha256'],
+        'official_call_checked_at': record['call']['verified_at']}.items()):
+        raise ValueError('Preparation plan must match the exact CV, call, verified round and route')
+    for field in ('research_question', 'distinctive_approach', 'feasibility_and_evaluation'):
+        value = plan.get(field)
+        if not isinstance(value, str) or len(value.strip()) < 25 or re.search(
+                r'\[(?:TO CONFIRM|EVIDENCE NEEDED|HOST APPROVAL REQUIRED)', value, re.I):
+            raise ValueError(f'Preparation strategy incomplete: {field}')
+    sections = [s['id'] for s in record['call'].get('sections') or [] if s.get('required', True)]
+    outlines = plan.get('section_outlines')
+    if not isinstance(outlines, dict):
+        raise ValueError('Required scheme section outlines are missing')
+    for section in sections:
+        value = outlines.get(section)
+        if not isinstance(value, str) or len(value.strip()) < 20:
+            raise ValueError('Missing substantive section outline for ' + section)
+    ids = plan.get('evidence_fact_ids')
+    if not isinstance(ids, list) or not ids:
+        raise ValueError('Preparation must cite at least one reviewed CV/source fact ID')
+    confirmed = {x['id'] for x in profile.get('fact_evidence') or []
+                 if x.get('review_state') == 'user_confirmed'}
+    if any(fact not in confirmed for fact in ids):
+        raise ValueError('Preparation references missing or unconfirmed CV evidence facts')
+    if not isinstance(plan.get('host_plan'), dict) or not isinstance(plan.get('budget_plan'), dict):
+        raise ValueError('Document the host/PI route and budget plan (unknowns may stay explicit)')
+    if not isinstance(plan.get('unresolved_requirements'), list):
+        raise ValueError('Document unresolved requirements as a list; do not conceal blockers')
+    plan['status'] = 'applicant_reviewed_preparation'
+    plan['applicant_reviewed'] = True
+    plan['confirmed_at'] = moment().isoformat()
+    record_id = 'prep:' + hashlib.sha256(
+        json.dumps(plan, sort_keys=True, ensure_ascii=False).encode('utf-8')).hexdigest()[:20]
+    pipeline.advance(state, args.key, 'prepared', confirmed=True, evidence_ref=record_id)
+    save(path, plan)
+    save(state_path, state)
+    return {'status': 'prepared_for_application_drafting', 'plan': str(path),
+            'plan_receipt': record_id, 'unresolved_requirements': plan['unresolved_requirements'],
+            'next': 'Run /apply to write a full proposal; submission and host approvals remain separate.'}
+
+
+def apply(args, root):
+    """Create a substantive-writing workspace ONLY after preparation has been reviewed."""
+    profile = profile_at(root)
+    path = root / 'ledger.json'
+    state = pipeline.load_state(path)
+    record = state['calls'].get(args.key)
+    if record is None:
+        raise ValueError('Unknown call key; run /search and /match first')
+    route = args.route or record.get('route')
+    assessment = validated_route(profile, record, route, 'draft')
+    folder = application_directory(root, args.key, route)
+    preparation_path = folder / 'preparation.json'
+    if not preparation_path.exists():
+        raise ValueError('Missing preparation plan: run /prepare before /apply')
+    preparation = funding.read_json(preparation_path)
+    if preparation.get('status') != 'applicant_reviewed_preparation':
+        raise ValueError('Preparation is not complete: run prepare-complete with confirmed strategy')
+    if record['stage'] not in {'prepared', 'drafting'}:
+        raise ValueError('Complete the Prepare phase before Apply (stage=' + record['stage'] + ')')
+    proposal = folder / 'proposal.md'
+    if proposal.exists():
+        return {'status': 'draft_exists_not_overwritten', 'path': str(proposal),
+                'route_eligibility': assessment['status'], 'next': 'Continue drafting and independent review'}
+    folder.mkdir(parents=True, exist_ok=True)
+    funding.prepare(record['call'], proposal, moment())
+    save(folder / 'application.json', {
+        'call_key': args.key, 'call_id': record['call']['id'],
+        'round': record['call']['round'], 'route': route,
+        'eligible_status_at_drafting': assessment['status'], 'cv_hash': profile['cv_sha256'],
+        'preparation_receipt': (record.get('history') or [{}])[-1].get('evidence_ref'),
+        'status': 'drafting_not_submitted',
+        'source_url': record['call']['official_url'], 'created_at': moment().isoformat(),
+        'reviewed_by_user': False})
+    if record['stage'] == 'prepared':
+        pipeline.advance(state, args.key, 'drafting', route=route)
+    save(path, state)
+    return {'status': 'concept_only' if assessment['status'] == 'conditional' else 'draft_scaffold_created',
+            'proposal': str(proposal), 'preparation_plan': str(preparation_path),
+            'requirements': str(folder / 'requirements.md'),
+            'next': 'AI host writes and revises full funder-specific prose; check with audit and ready. NOT SUBMITTED.'}
 
 
 def ready(args, root):
@@ -480,11 +633,18 @@ def main(argv=None):
     v = sub.add_parser('verify', help='Promote a discovery lead to a source-checked specific call round')
     v.add_argument('--key', required=True)
     v.add_argument('--call-file', type=Path, required=True)
-    r = sub.add_parser('rank')
-    r.add_argument('--limit', type=int, default=10)
-    a = sub.add_parser('apply')
+    for command in ('match', 'rank'):
+        m = sub.add_parser(command, help='Verify role eligibility and research fit; rank is a legacy alias')
+        m.add_argument('--limit', type=int, default=10)
+    pp = sub.add_parser('prepare', help='Start a separate source-linked grant preparation plan')
+    pp.add_argument('--key', required=True)
+    pp.add_argument('--route', choices=['independent', 'new_pi'], required=True)
+    complete = sub.add_parser('prepare-complete', help='Review finished strategy before application writing')
+    complete.add_argument('--key', required=True)
+    complete.add_argument('--confirm-reviewed', action='store_true')
+    a = sub.add_parser('apply', help='Create draft only after a reviewed preparation')
     a.add_argument('--key', required=True)
-    a.add_argument('--route', choices=['independent', 'new_pi'], required=True)
+    a.add_argument('--route', choices=['independent', 'new_pi'])
     r = sub.add_parser('ready', help='Audit completed proposal JSON before recording draft_ready')
     r.add_argument('--key', required=True)
     r.add_argument('--proposal-json', required=True)
@@ -515,10 +675,14 @@ def main(argv=None):
             result = search(args, root)
         elif args.command == 'verify':
             result = verify(args, root)
-        elif args.command == 'rank':
+        elif args.command in ('match', 'rank'):
             if args.limit < 1 or args.limit > 200:
                 raise ValueError('--limit must be 1..200')
             result = rank(args, root)
+        elif args.command == 'prepare':
+            result = prepare(args, root)
+        elif args.command == 'prepare-complete':
+            result = prepare_complete(args, root)
         elif args.command == 'apply':
             result = apply(args, root)
         elif args.command == 'ready':
