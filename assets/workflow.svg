@@ -11,7 +11,7 @@
  <text x="0" y="31" font-family="Georgia,Times New Roman,serif" font-size="62" font-style="italic" fill="#B1ADA2">01</text>
  <path d="M0 59 H204" stroke="#AAB0A3" stroke-width="1.3"/>
  <text x="0" y="101" font-family="Arial,Helvetica,sans-serif" font-weight="750" font-size="24" letter-spacing="1.5" fill="#22332C">SETUP</text>
- <text x="0" y="135" font-family="Georgia,Times New Roman,serif" font-size="19" fill="#4B574D">A verified research CV</text>
+ <text x="0" y="135" font-family="Georgia,Times New Roman,serif" font-size="19" fill="#4B574D">Research CV and goals</text>
  <text x="0" y="167" font-family="Arial,Helvetica,sans-serif" font-size="13" letter-spacing=".5" fill="#777F70">Record what is true</text>
  <circle cx="218" cy="59" r="3.5" fill="#B55D46"/>
  </g>
@@ -20,7 +20,7 @@
  <text x="0" y="31" font-family="Georgia,Times New Roman,serif" font-size="62" font-style="italic" fill="#B1ADA2">02</text>
  <path d="M0 59 H204" stroke="#AAB0A3" stroke-width="1.3"/>
  <text x="0" y="101" font-family="Arial,Helvetica,sans-serif" font-weight="750" font-size="24" letter-spacing="1.5" fill="#22332C">SEARCH</text>
- <text x="0" y="135" font-family="Georgia,Times New Roman,serif" font-size="19" fill="#4B574D">Opportunities worldwide</text>
+ <text x="0" y="135" font-family="Georgia,Times New Roman,serif" font-size="19" fill="#4B574D">Global opportunities</text>
  <text x="0" y="167" font-family="Arial,Helvetica,sans-serif" font-size="13" letter-spacing=".5" fill="#777F70">Follow official calls</text>
  <circle cx="218" cy="59" r="3.5" fill="#B55D46"/>
  </g>
@@ -29,7 +29,7 @@
  <text x="0" y="31" font-family="Georgia,Times New Roman,serif" font-size="62" font-style="italic" fill="#B1ADA2">03</text>
  <path d="M0 59 H204" stroke="#AAB0A3" stroke-width="1.3"/>
  <text x="0" y="101" font-family="Arial,Helvetica,sans-serif" font-weight="750" font-size="24" letter-spacing="1.5" fill="#22332C">MATCH</text>
- <text x="0" y="135" font-family="Georgia,Times New Roman,serif" font-size="19" fill="#4B574D">Eligibility before fit</text>
+ <text x="0" y="135" font-family="Georgia,Times New Roman,serif" font-size="19" fill="#4B574D">Eligibility first</text>
  <text x="0" y="167" font-family="Arial,Helvetica,sans-serif" font-size="13" letter-spacing=".5" fill="#777F70">Know the constraints</text>
  <circle cx="218" cy="59" r="3.5" fill="#B55D46"/>
  </g>
@@ -38,7 +38,7 @@
  <text x="0" y="31" font-family="Georgia,Times New Roman,serif" font-size="62" font-style="italic" fill="#A9533F">04</text>
  <path d="M0 59 H204" stroke="#A9533F" stroke-width="2.4"/>
  <text x="0" y="101" font-family="Arial,Helvetica,sans-serif" font-weight="750" font-size="24" letter-spacing="1.5" fill="#22332C">PREPARE</text>
- <text x="0" y="135" font-family="Georgia,Times New Roman,serif" font-size="19" fill="#4B574D">A defensible research plan</text>
+ <text x="0" y="135" font-family="Georgia,Times New Roman,serif" font-size="19" fill="#4B574D">Research strategy</text>
  <text x="0" y="167" font-family="Arial,Helvetica,sans-serif" font-size="13" letter-spacing=".5" fill="#777F70">Build your case</text>
  <circle cx="218" cy="59" r="3.5" fill="#B55D46"/>
  </g>
@@ -47,7 +47,7 @@
  <text x="0" y="31" font-family="Georgia,Times New Roman,serif" font-size="62" font-style="italic" fill="#B1ADA2">05</text>
  <path d="M0 59 H204" stroke="#AAB0A3" stroke-width="1.3"/>
  <text x="0" y="101" font-family="Arial,Helvetica,sans-serif" font-weight="750" font-size="24" letter-spacing="1.5" fill="#22332C">APPLY</text>
- <text x="0" y="135" font-family="Georgia,Times New Roman,serif" font-size="19" fill="#4B574D">Write for this funder</text>
+ <text x="0" y="135" font-family="Georgia,Times New Roman,serif" font-size="19" fill="#4B574D">Funder-specific draft</text>
  <text x="0" y="167" font-family="Arial,Helvetica,sans-serif" font-size="13" letter-spacing=".5" fill="#777F70">Critique the draft</text>
  <circle cx="218" cy="59" r="3.5" fill="#B55D46"/>
  </g>
@@ -56,7 +56,7 @@
  <text x="0" y="31" font-family="Georgia,Times New Roman,serif" font-size="62" font-style="italic" fill="#B1ADA2">06</text>
  <path d="M0 59 H204" stroke="#AAB0A3" stroke-width="1.3"/>
  <text x="0" y="101" font-family="Arial,Helvetica,sans-serif" font-weight="750" font-size="24" letter-spacing="1.5" fill="#22332C">TRACK</text>
- <text x="0" y="135" font-family="Georgia,Times New Roman,serif" font-size="19" fill="#4B574D">Record and learn</text>
+ <text x="0" y="135" font-family="Georgia,Times New Roman,serif" font-size="19" fill="#4B574D">Track and learn</text>
  <text x="0" y="167" font-family="Arial,Helvetica,sans-serif" font-size="13" letter-spacing=".5" fill="#777F70">Return better prepared</text>
  
  </g>
