@@ -143,4 +143,4 @@ private/                           # Not committed to public GitHub
 
 Private CVs, unpublished research plans, budgets and PI correspondence stay in Git-ignored `private/`. There are **no GitHub Actions or automatic submissions**. An official source and applicant/host approval remain necessary for consequential application claims.
 
-Inspired by [AI Job Search](https://github.com/MadsLorentzen/ai-job-search) and [Research Autopilot](https://github.com/Yunbo-max/Research_Autopilot). Independently implemented · [MIT License](LICENSE) · [Full guide](docs/USER-WORKFLOW.md).
+Inspired by [AI Job Search](https://github.com/MadsLorentzen/ai-job-search) and [Research Autopilot](https://github.com/Yunbo-max/Research_Autopilot). Independently implemented · [MIT License](LICENSE) · [Full guide](docs/USER-WORKFLOW.md) · [Visual identity](docs/ART-DIRECTION.md).

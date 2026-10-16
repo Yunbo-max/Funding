@@ -23,3 +23,9 @@ python3 -m py_compile skills/funding-autopilot/scripts/workspace.py skills/fundi
 ```
 
 The supplied tests use fictional CVs and funding calls, not genuine grant availability; even a passing test suite is not evidence of real-life grant acceptance.
+
+## Editorial image redesign — 2026-10-16
+
+- GitHub main now includes four original self-contained editorial SVGs (hero, six-stage workflow, twelve-month timeline, five proposal narratives) with a shared warm print palette, serif headlines, sans-serif metadata and **no SVG gradients or embedded generated photographs**.
+- The English GitHub README uses the owner's requested English slogan, with no Chinese characters or Chinese navigation. Separate Chinese documentation was retired.
+- The latest new regression tests check this editorial style and README link integrity. In-session static checks examined SVG tag nesting, closing tags, raw ampersands, local relative references and lack of GitHub workflow files. **A complete Python test run and cross-browser visual render have not been executed in this GitHub-only session.**

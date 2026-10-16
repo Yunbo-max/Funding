@@ -2,6 +2,11 @@
 
 ## 0.4.0 — 2026-10-16
 
+- Replaced all four previously dark/gradient AI-style diagrams with **original flat editorial SVG art** (warm ivory, forest green, brick red, serif headline typography and restrained graph-paper geometry). Illustrations remain editable and self-contained in the public repository.
+- Translated the research-readiness headline into idiomatic English throughout the **public English README and hero**, removed Chinese navigation, and retired the separate Chinese translation to keep the project presentation English-only. The slogan is aspirational rather than a funding-success guarantee.
+- Documented a reusable [visual identity](docs/ART-DIRECTION.md) and extended README regression tests to guard English text, SVG resource independence and removal of glow/gradient effects.
+
+
 - Added sourced, balanced comparison of grant tools plus original twelve-month funding-readiness and five-proposal-type vector illustrations; updated bilingual motivational tagline without promising awards.
 - Added /year-plan as a one-time Claude Code AI-host planning playbook using verified calls and private CV facts; does not activate background monitoring or add a Python scheduler.
 - Added scheme-specific writing strategies for fellowships, PI-led research grants, consortia, innovation projects and past-impact awards, integrated into Prepare/Apply.
