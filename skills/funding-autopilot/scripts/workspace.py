@@ -182,12 +182,26 @@ def search(args, root):
     selected = leads[:args.limit]
     ledger_path = root / 'ledger.json'
     ledger = pipeline.load_state(ledger_path)
-    result = pipeline.ingest(ledger, selected)
+    fresh, recheck = [], []
+    for lead in selected:
+        # RSS discovery has no round. A previously verified round may have the
+        # same URL; avoid recreating an unverified duplicate and request a round check.
+        existing_key = next((key for key, rec in ledger['calls'].items()
+                             if str(rec['call'].get('id', '')).casefold() == str(lead.get('id', '')).casefold()
+                             and str(rec['call'].get('funder', '')).casefold() == str(lead.get('funder', '')).casefold()
+                             and str(lead.get('official_url', '')) in {x['url'] for x in rec['sources']}
+                             and rec['call'].get('round') != 'unverified'), None)
+        if lead.get('round') == 'unverified' and existing_key:
+            recheck.append(existing_key)
+        else:
+            fresh.append(lead)
+    result = pipeline.ingest(ledger, fresh)
     save(ledger_path, ledger)
     return {'source': source, 'search_terms': csv_list(args.query) or profile.get('research_terms', []),
-            'found': len(leads), 'ingested': len(selected), 'added': result['added'],
-            'already_seen': len(result['existing']),
-            'warning': 'Discovery leads are NOT verified/eligible calls. Run batch then verify using official guidance.'}
+            'found': len(leads), 'ingested': len(fresh), 'added': result['added'],
+            'already_seen': len(result['existing']) + len(recheck),
+            'needs_round_recheck': recheck,
+            'warning': 'Discovery leads are NOT verified/eligible calls. Recheck official rounds when seen again.'}
 
 
 def verify(args, root):
@@ -348,6 +362,9 @@ def status(root):
     return {'profile_reviewed': profile.get('fields_verified', False),
             'total_calls': len(ledger['calls']),
             'calls': [{'key': v['key'], 'title': v['call'].get('title'), 'round': v['call'].get('round'),
+                       'funder': v['call'].get('funder'), 'official_url': v['call'].get('official_url'),
+                       'deadline': (v['call'].get('deadlines') or {}).get('internal') or
+                                   (v['call'].get('deadlines') or {}).get('funder'),
                        'stage': v['stage'], 'route': v.get('route'),
                        'eligibility': {k: x['status'] for k, x in v.get('evaluations', {}).items()}}
                       for v in ledger['calls'].values()]}
