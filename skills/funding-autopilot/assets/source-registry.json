@@ -1,6 +1,6 @@
 {
-  "version": "0.1.0",
-  "disclaimer": "These are starting portals, not a live calls feed. Individual calls require new primary-source verification before recommendation.",
+  "version": "0.2.0",
+  "disclaimer": "Portal URLs are initial discovery locations only. Only the UKRI RSS has a bundled offline-tested discovery adapter. All other portals require a web-enabled host or separately validated adapter. Individual current-round calls and receiving-institution deadlines require fresh primary-source verification.",
   "portals": [
     {
       "name": "UKRI funding opportunities",
@@ -9,56 +9,129 @@
       "kind": "portal",
       "notes": "Verify each individual call, role and host eligibility",
       "rss_feed": "https://www.ukri.org/opportunity/feed/",
-      "discovery_adapter": "skills/funding-autopilot/sources/ukri_rss.py"
+      "discovery_adapter": "skills/funding-autopilot/sources/ukri_rss.py",
+      "discovery_mode": "bundled_ukri_rss_and_host_web"
     },
     {
       "name": "UKRI applicant eligibility guidance",
       "region": "UK",
       "url": "https://www.ukri.org/apply-for-funding/before-you-apply/find-out-if-you-can-apply-for-funding/",
       "kind": "guidance",
-      "notes": "General rules; scheme-specific restrictions prevail"
+      "notes": "General rules; scheme-specific restrictions prevail",
+      "discovery_mode": "agent_official_web"
     },
     {
       "name": "European Commission Funding & Tenders",
       "region": "EU",
       "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/home",
       "kind": "portal",
-      "notes": "Check association, mobility, researcher and host eligibility per scheme"
+      "notes": "Check association, mobility, researcher and host eligibility per scheme",
+      "discovery_mode": "agent_official_web"
     },
     {
       "name": "EURAXESS research funding and host positions",
       "region": "EU/global",
       "url": "https://euraxess.ec.europa.eu/jobs/search",
       "kind": "portal",
-      "notes": "Filter offers; job posts do not imply grant eligibility"
+      "notes": "Filter offers; job posts do not imply grant eligibility",
+      "discovery_mode": "agent_official_web"
     },
     {
       "name": "NSF funding",
       "region": "US",
       "url": "https://www.nsf.gov/funding",
       "kind": "portal",
-      "notes": "Confirm NSF organization/PI eligibility per solicitation"
+      "notes": "Confirm NSF organization/PI eligibility per solicitation",
+      "discovery_mode": "agent_official_web"
     },
     {
       "name": "NIH funding opportunities",
       "region": "US",
       "url": "https://www.grants.nih.gov/funding/explore-nih-opportunities",
       "kind": "portal",
-      "notes": "NIH-specific Grants.gov opportunity filters"
+      "notes": "NIH-specific Grants.gov opportunity filters",
+      "discovery_mode": "agent_official_web"
     },
     {
       "name": "ARIA opportunities",
       "region": "UK/global",
       "url": "https://aria.org.uk/opportunity-spaces/",
       "kind": "portal",
-      "notes": "Verify open call, research agreement and individual/team applicant status"
+      "notes": "Verify open call, research agreement and individual/team applicant status",
+      "discovery_mode": "agent_official_web"
     },
     {
       "name": "Amazon Research Awards",
       "region": "Global",
       "url": "https://www.amazon.science/research-awards",
       "kind": "portal",
-      "notes": "Verify role, institutional PI eligibility, call cycle and funding mechanism"
+      "notes": "Verify role, institutional PI eligibility, call cycle and funding mechanism",
+      "discovery_mode": "agent_official_web"
+    },
+    {
+      "name": "Canada NSERC funding opportunities",
+      "region": "Canada / North America",
+      "url": "https://nserc-crsng.canada.ca/en/funding/funding-opportunity",
+      "kind": "portal",
+      "discovery_mode": "agent_official_web",
+      "notes": "Natural sciences and engineering; researcher/institution/partnership rules vary by scheme"
+    },
+    {
+      "name": "Australia ARC research funding",
+      "region": "Australia / Oceania",
+      "url": "https://www.arc.gov.au/funding-research/applying-grant",
+      "kind": "portal",
+      "discovery_mode": "agent_official_web",
+      "notes": "ARC grants are submitted by eligible organizations; check the exact scheme and Research Office deadlines"
+    },
+    {
+      "name": "New Zealand Royal Society funding",
+      "region": "New Zealand / Oceania",
+      "url": "https://www.royalsociety.org.nz/what-we-do/funds-and-opportunities",
+      "kind": "portal",
+      "discovery_mode": "agent_official_web",
+      "notes": "Marsden and fellowship opportunities; check host, nationality/residence and career-stage rules"
+    },
+    {
+      "name": "Germany DFG funding programmes",
+      "region": "Germany / Europe",
+      "url": "https://www.dfg.de/en/research-funding/funding-opportunities/programmes",
+      "kind": "portal",
+      "discovery_mode": "agent_official_web",
+      "notes": "Distinguish individual fellowships from institution-led awards and check doctoral requirements"
+    },
+    {
+      "name": "Japan JSPS research fellowships",
+      "region": "Japan / Asia",
+      "url": "https://www.jsps.go.jp/english/e-pd/",
+      "kind": "portal",
+      "discovery_mode": "agent_official_web",
+      "notes": "Doctoral, postdoctoral and host-specific categories have different career and nationality requirements"
+    },
+    {
+      "name": "Singapore NRF grants",
+      "region": "Singapore / Asia",
+      "url": "https://www.nrf.gov.sg/grants/",
+      "kind": "portal",
+      "discovery_mode": "agent_official_web",
+      "notes": "Singapore host institutions and fellowship/investigatorship categories have different rules"
+    },
+    {
+      "name": "Brazil FAPESP calls",
+      "region": "Brazil / Latin America",
+      "url": "https://fapesp.br/calls",
+      "kind": "portal",
+      "discovery_mode": "agent_official_web",
+      "notes": "São Paulo research-host and bilateral partnership eligibility varies by call"
+    },
+    {
+      "name": "South Africa NRF funding",
+      "region": "South Africa / Africa",
+      "url": "https://www.nrf.ac.za/funding/",
+      "kind": "portal",
+      "discovery_mode": "agent_official_web",
+      "notes": "Investigate actual current-round research grant/fellowship categories and institutional rules"
     }
-  ]
+  ],
+  "scope": "Global by design: official portals are research entry points, not a complete or live global grants database."
 }
