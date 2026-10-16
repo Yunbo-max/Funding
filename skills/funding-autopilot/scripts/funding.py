@@ -263,7 +263,6 @@ def shortlist(profile, calls, as_of=None):
             'results': records}
 
 
-
 def prepare(call, output, as_of=None):
     """Prepare a funder-section-shaped blank draft; the AI host writes the prose."""
     if as_of is None:
