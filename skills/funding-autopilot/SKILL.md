@@ -5,7 +5,7 @@ license: MIT
 compatibility: "Requires a host able to read uploaded CVs and browse current official funding pages; optional local Python 3.10+ helper."
 metadata:
   author: Yunbo-max
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # Funding Autopilot

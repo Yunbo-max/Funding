@@ -1,0 +1,30 @@
+[
+  {
+    "id": "demo-fellowship",
+    "funder": "Fictional Open Research Foundation",
+    "round": "2027-demo",
+    "title": "DEMO ONLY — Fictional Early Career Fellowship",
+    "official_url": "https://example.org/fictional-fellowship",
+    "discovered_via": "local-test-sample",
+    "call_status": "unknown",
+    "routes": [
+      "independent",
+      "new_pi"
+    ],
+    "salary_support": "unknown"
+  },
+  {
+    "id": "demo-fellowship",
+    "funder": "Fictional Open Research Foundation",
+    "round": "2028-demo",
+    "title": "DEMO ONLY — next round of same fictional programme",
+    "official_url": "https://example.org/fictional-fellowship-2028",
+    "discovered_via": "local-test-sample",
+    "call_status": "unknown",
+    "routes": [
+      "independent",
+      "new_pi"
+    ],
+    "salary_support": "unknown"
+  }
+]

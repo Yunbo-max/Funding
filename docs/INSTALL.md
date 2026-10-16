@@ -33,3 +33,33 @@ Keep personal inputs and outputs under `private/` (ignored by Git). Do not publi
 3. Confirm that without a CV, personal matching stops; without official call verification, it does not assert eligibility.
 4. Choose a real verified call, run `prepare` for a blank application-specific template and ask the agent to fill its sections with auditable evidence.
 5. Run `audit` and complete human/host review before any submission.
+
+## Stateful pipeline (v0.2)
+
+After the host has read official funder sources and written `private/discovered-calls.json`:
+
+```bash
+python3 skills/funding-autopilot/scripts/pipeline.py --state private/ledger.json ingest --input private/discovered-calls.json
+python3 skills/funding-autopilot/scripts/pipeline.py --state private/ledger.json batch --limit 10
+python3 skills/funding-autopilot/scripts/pipeline.py --state private/ledger.json rank --profile private/profile.json
+python3 skills/funding-autopilot/scripts/pipeline.py --state private/ledger.json report --out private/funding-report.html
+```
+
+To advance an application stage safely:
+
+```bash
+python3 skills/funding-autopilot/scripts/pipeline.py --state private/ledger.json advance --key call-EXACT-KEY --to shortlisted
+python3 skills/funding-autopilot/scripts/pipeline.py --state private/ledger.json advance --key call-EXACT-KEY --to selected --route independent
+```
+
+`submitted` and decision statuses additionally require an explicit human confirmation and receipt reference, as specified in [the pipeline contract](../skills/funding-autopilot/references/pipeline-records.md). Do not use these commands to impersonate a human approval. The `--state` file and HTML `--out` MUST resolve inside a directory literally called `private`.
+
+Optional PDF mechanical checks, after producing a real application PDF:
+
+```bash
+python3 skills/funding-autopilot/scripts/verify_grant_pdf.py --pdf private/application.pdf --max-pages 5 --must-contain "Research"
+```
+
+The actual maximum page count and required field wording must come from the selected official call. Passing this script **never replaces visually inspecting the rendered PDF**. The `[documents]` extra includes `pypdf`.
+
+Run the full local unit suite with `python3 -m unittest discover -s tests -v`. The six to eight phases described in `skills/funding-autopilot/commands/` are agent instructions, not an automatically installed scheduler.
