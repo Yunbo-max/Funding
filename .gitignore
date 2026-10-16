@@ -1,0 +1,19 @@
+
+# Never commit user CVs, candidate dossiers, personal research history or applications
+private/
+applications/
+output/
+outputs/
+data/private/
+logs/private/
+*.env
+.env*
+!.env.example
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+dist/
+build/
+*.egg-info/
+.DS_Store

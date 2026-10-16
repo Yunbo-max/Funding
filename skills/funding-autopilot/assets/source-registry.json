@@ -1,0 +1,62 @@
+{
+  "version": "0.1.0",
+  "disclaimer": "These are starting portals, not a live calls feed. Individual calls require new primary-source verification before recommendation.",
+  "portals": [
+    {
+      "name": "UKRI funding opportunities",
+      "region": "UK",
+      "url": "https://www.ukri.org/opportunity/",
+      "kind": "portal",
+      "notes": "Verify each individual call, role and host eligibility"
+    },
+    {
+      "name": "UKRI applicant eligibility guidance",
+      "region": "UK",
+      "url": "https://www.ukri.org/apply-for-funding/before-you-apply/find-out-if-you-can-apply-for-funding/",
+      "kind": "guidance",
+      "notes": "General rules; scheme-specific restrictions prevail"
+    },
+    {
+      "name": "European Commission Funding & Tenders",
+      "region": "EU",
+      "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/home",
+      "kind": "portal",
+      "notes": "Check association, mobility, researcher and host eligibility per scheme"
+    },
+    {
+      "name": "EURAXESS research funding and host positions",
+      "region": "EU/global",
+      "url": "https://euraxess.ec.europa.eu/jobs/search",
+      "kind": "portal",
+      "notes": "Filter offers; job posts do not imply grant eligibility"
+    },
+    {
+      "name": "NSF funding",
+      "region": "US",
+      "url": "https://www.nsf.gov/funding",
+      "kind": "portal",
+      "notes": "Confirm NSF organization/PI eligibility per solicitation"
+    },
+    {
+      "name": "NIH funding opportunities",
+      "region": "US",
+      "url": "https://www.grants.nih.gov/funding/explore-nih-opportunities",
+      "kind": "portal",
+      "notes": "NIH-specific Grants.gov opportunity filters"
+    },
+    {
+      "name": "ARIA opportunities",
+      "region": "UK/global",
+      "url": "https://aria.org.uk/opportunity-spaces/",
+      "kind": "portal",
+      "notes": "Verify open call, research agreement and individual/team applicant status"
+    },
+    {
+      "name": "Amazon Research Awards",
+      "region": "Global",
+      "url": "https://www.amazon.science/research-awards",
+      "kind": "portal",
+      "notes": "Verify role, institutional PI eligibility, call cycle and funding mechanism"
+    }
+  ]
+}
