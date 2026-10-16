@@ -198,6 +198,10 @@ def setup_confirm(args, root):
     profile['fields_verified'] = True
     profile['profile_status'] = 'user_reviewed'
     profile['confirmed_at'] = moment().isoformat()
+    for fact in profile.get('fact_evidence') or []:
+        if fact.get('review_state') == 'proposed_pending_user_confirmation':
+            fact['review_state'] = 'user_confirmed'
+            fact['confirmed_at'] = profile['confirmed_at']
     save(root / 'profile.json', profile)
     return {'status': 'profile_confirmed_by_user', 'next': 'search (UKRI RSS) or search --input-file <host-discovered-leads.json>'}
 
