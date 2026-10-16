@@ -5,7 +5,7 @@ This is an open-source, general-purpose researcher funding workspace, modeled on
 ## Primary commands
 
 - `/setup` — require the user-uploaded CV; make a private profile, collect only important preferences and career milestones, ask the user to review facts.
-- `/search` — discover official opportunities across relevant regions and funding modalities; use UKRI RSS as one source and direct web/official portals for all other sources; don't interpret search hits as eligibility.
+- `/search` — plan research across the user's **chosen countries or worldwide**, with country-specific queries and official-source coverage records; UKRI RSS is an optional UK source only, other regions use actual authorized host web tools/adapters. Do not interpret portal hits as eligibility.
 - `/match` (legacy `/rank`) — verify official round, researcher/PI/Host eligibility, institutional deadlines, and research fit.
 - `/prepare` — develop a defensible science plan, CV evidence, PI/Host strategy, budget and funder-field outlines; require applicant-reviewed completion.
 - `/apply` — use the completed Prepare packet to draft actual required proposal sections, review content, format documents and audit compliance.

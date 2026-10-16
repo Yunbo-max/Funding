@@ -12,6 +12,14 @@ metadata:
 
 Find a suitable *eligible* funding route, then develop the strongest honest application supported by the applicant's evidence. Treat opportunities as **funder-specific contracts**, not generic topic keywords. This skill operates on demand; it does not schedule itself or send applications.
 
+## Scope: researchers and funding across regions
+
+Funding Autopilot is **geographically agnostic**: support searches in the user's chosen countries/regions or worldwide, across disciplines, rather than assuming the applicant must remain in the present university or the UK. Read [worldwide discovery and coverage rules](references/discovery.md) and report verified geographic coverage and gaps. The bundled Python source adapter presently supports **UKRI RSS only**; global source discovery is performed by an appropriately web-enabled agent or by separately added/tested source adapters. An applicant's personal eligibility to seek a given international award and the receiving institution's authority are **call-specific hard checks**.
+
+## Reasoning loop: why a call is worth pursuing
+
+For every candidate, work through **CV-grounded applicant model → geographical/topic/role search expansion → official-call evidence → eligibility veto / unresolved blockers → independent vs new-PI and salary tradeoffs → research-preparation hypothesis, evidence and feasibility → draft–critique–repair → user-confirmed outcome**. Preserve the sourced reason for each branch and the next action rather than producing unsupported numerical award probabilities. A rejected route or negative fit finding should remain in the ledger with evidence; new information can trigger a new check, never silent status promotion.
+
 ## The workflow (keep this order)
 
 ### Gate 0 — Require user-uploaded CV and preserve privacy

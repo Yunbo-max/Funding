@@ -1,5 +1,7 @@
 # Funding Autopilot: user workflow
 
+**Global scope:** You may search grants in any requested country or region with an AI host capable of checking those official websites. The bundled Python connector is presently limited to the recent UKRI RSS feed; other regions require host web/search or verified additional adapters. Record source coverage and gaps, and check legal applicant/PI/host rules per country and call. See [official source portals](../skills/funding-autopilot/assets/source-registry.json).
+
 The goal is to offer the same **setup → search → match → prepare → apply → outcome** user journey that makes [ai-job-search](https://github.com/MadsLorentzen/ai-job-search) practical, while enforcing real academic eligibility and host-institution rules.
 
 ## 1. Install and open
