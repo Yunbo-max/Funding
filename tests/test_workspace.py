@@ -122,6 +122,8 @@ class WorkspaceTests(unittest.TestCase):
         self.assertEqual(app.setup_facts(params(input_file=str(file)),self.private)['added'],0)
         self.assertFalse(app.profile_at(self.private)['fields_verified'])
         self.assertEqual(len(app.setup_review(self.private)['cv_evidence_facts']),1)
+        app.setup_confirm(params(confirm_reviewed=True), self.private)
+        self.assertEqual(app.profile_at(self.private)['fact_evidence'][0]['review_state'], 'user_confirmed')
 
     def test_setup_facts_rejects_public_file_and_conflicting_claim(self):
         self.setup_profile()
