@@ -138,6 +138,24 @@ class WritingTests(unittest.TestCase):
         self.assertTrue(any('documents' in issue for issue in row['issues']))
         self.assertTrue(any('unverified evidence' in issue for issue in row['issues']))
 
+    def test_prepare_creates_call_specific_blank_draft(self):
+        with tempfile.TemporaryDirectory() as td:
+            out = Path(td) / 'private/proposal.md'
+            result = funding.prepare(example_call(), out, NOW)
+            text = out.read_text(encoding='utf-8')
+            self.assertEqual(result['section_count'], 2)
+            self.assertIn('## summary', text)
+            self.assertIn('## plan', text)
+            self.assertIn('host_letter', text)
+            self.assertIn('HUMAN/PI/HOST REVIEW', text)
+
+    def test_prepare_rejects_unverified_call(self):
+        with tempfile.TemporaryDirectory() as td:
+            call = example_call()
+            call['verified_at'] = None
+            with self.assertRaisesRegex(ValueError, 'source verification'):
+                funding.prepare(call, Path(td) / 'private/proposal.md', NOW)
+
     def test_intake_rejects_short_cv(self):
         with tempfile.TemporaryDirectory() as td:
             file = Path(td) / 'cv.txt'

@@ -30,6 +30,7 @@ For local structured checks (Python 3.10+, standard library), run:
 ```bash
 python3 skills/funding-autopilot/scripts/funding.py intake --cv path/to/cv.pdf --out private/profile.json
 python3 skills/funding-autopilot/scripts/funding.py shortlist --profile private/profile.json --calls examples/illustrative-calls.json --out private/shortlist.json
+python3 skills/funding-autopilot/scripts/funding.py prepare --call private/verified-call.json --out private/application-draft.md
 python3 skills/funding-autopilot/scripts/funding.py audit --proposal private/proposal.json --call private/verified-call.json
 python3 -m unittest discover -s tests -v
 ```

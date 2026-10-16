@@ -68,6 +68,7 @@ When the user explicitly asks for recurring discovery or deadline alerts, set a 
 ```bash
 python3 skills/funding-autopilot/scripts/funding.py intake --cv private/cv.pdf --out private/profile.json
 python3 skills/funding-autopilot/scripts/funding.py shortlist --profile private/profile.json --calls private/calls.json --out private/shortlist.json
+python3 skills/funding-autopilot/scripts/funding.py prepare --call private/verified-call.json --out private/application-draft.md
 python3 skills/funding-autopilot/scripts/funding.py audit --proposal private/proposal.json --call private/call.json --out private/audit.json
 ```
 

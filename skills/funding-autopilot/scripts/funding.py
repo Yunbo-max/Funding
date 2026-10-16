@@ -263,6 +263,48 @@ def shortlist(profile, calls, as_of=None):
             'results': records}
 
 
+
+def prepare(call, output, as_of=None):
+    """Prepare a funder-section-shaped blank draft; the AI host writes the prose."""
+    if as_of is None:
+        as_of = utc_now()
+    problems = call_source_problems(call, as_of)
+    if problems:
+        raise ValueError('cannot prepare official-shaped draft before source verification: ' + '; '.join(problems))
+    specs = call.get('sections') or []
+    if not specs:
+        raise ValueError("cannot prepare draft without this call's actual section specifications")
+    output = Path(output)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    title = str(call.get('title') or call['id']).replace('\n', ' ').strip()
+    lines = [f'# {title}', '', '**DRAFT — HUMAN/PI/HOST REVIEW REQUIRED; NOT SUBMITTED**', '',
+             f"Funder: {call.get('funder', '[TO CONFIRM]')}",
+             f"Round: {call.get('round')}",
+             f"Official call: {call.get('official_url')}",
+             f"Call checked: {call.get('verified_at')}",
+             f"Funder deadline: {(call.get('deadlines') or {}).get('funder') or 'rolling (verify current status)'}", '',
+             '## Eligibility and institutional checks', '',
+             '- [ ] Personal eligibility verified against current call guidance',
+             '- [ ] Host and/or new PI acceptance verified if required',
+             '- [ ] Internal submission deadline and budget rules checked',
+             '- [ ] Institution and applicant approve the final submission', '']
+    for spec in specs:
+        name = str(spec.get('id') or 'unnamed-section')
+        word_cap = spec.get('max_words')
+        lines.extend([f'## {name}', '',
+                      f"Word cap: {word_cap if word_cap is not None else '[TO CONFIRM]'}; required: {bool(spec.get('required', True))}",
+                      '', '[EVIDENCE NEEDED: draft this section using verified CV and official call criteria]', ''])
+    lines += ['## Mandatory documents', '']
+    for document in call.get('required_documents') or []:
+        lines.append(f'- [ ] {document}')
+    lines += ['', '## Research-claim and source ledger', '',
+              '| Claim | CV/publication/call evidence | Status |', '|---|---|---|',
+              '| [TO CONFIRM] | [EVIDENCE NEEDED] | unresolved |', '']
+    output.write_text('\n'.join(lines), encoding='utf-8')
+    return {'file': str(output), 'call_id': call['id'], 'section_count': len(specs),
+            'status': 'blank_draft_human_review_required'}
+
+
 def count_words(text):
     return len(re.findall(r"\b[\w]+(?:['-][\w]+)*\b", text, flags=re.UNICODE))
 
@@ -327,6 +369,10 @@ def main(argv=None):
     p.add_argument('--calls', required=True)
     p.add_argument('--out')
     p.add_argument('--as-of', help='aware ISO UTC/offset timestamp for repeatable checks')
+    p = sub.add_parser('prepare', help='create blank draft with official-call section headings')
+    p.add_argument('--call', required=True)
+    p.add_argument('--out', required=True)
+    p.add_argument('--as-of', help='aware ISO UTC/offset timestamp')
     p = sub.add_parser('audit', help='audit proposal structure against structured call spec')
     p.add_argument('--proposal', required=True)
     p.add_argument('--call', required=True)
@@ -344,6 +390,9 @@ def main(argv=None):
             if args.out:
                 save_json(args.out, data)
             summary = data
+        elif args.command == 'prepare':
+            now = parse_datetime(args.as_of) if args.as_of else utc_now()
+            summary = prepare(read_json(args.call), args.out, now)
         else:
             now = parse_datetime(args.as_of) if args.as_of else utc_now()
             data = audit(read_json(args.proposal), read_json(args.call), now)
