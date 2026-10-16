@@ -19,3 +19,7 @@ Native slash commands under `.claude/commands/` use `skills/funding-autopilot/sc
 Personal grant applications must have a real selected route, verified round, official guidance and documented review. The wrapper creates scaffolds; an authorized AI host must compose genuine grant prose and actual artifact files before telling the user the application is written. Never call an empty scaffold a finished proposal. Marking `draft_ready` is not submission; outcomes require receipts. Tests using fictional calls or stub dependencies must be reported as such and may not be described as real sponsor availability or validated end-to-end deployment.
 
 All private records remain under an ignored `private/` path. Do not add GitHub Actions, .github/workflows files, automatic hooks or unattended web scrapers. Use direct reads and guarded commits only, with readback verification.
+
+## Global funding comparison and roadmap policy
+
+README graphics are static SVG illustrations, not product screenshots or source-backed scheme deadlines. Comparison claims about PaperBreak, GrantWell, grant-finder and Grantable need current public documentation and honest disclosure of Funding's limited built-in live sources. The `/year-plan` AI host command may write one private twelve-month plan; it does not start recurring research, email PIs, submit applications or use GitHub Actions. Actual scheme rules override general proposal-type writing templates.

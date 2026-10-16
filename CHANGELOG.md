@@ -2,6 +2,10 @@
 
 ## 0.4.0 — 2026-10-16
 
+- Added sourced, balanced comparison of grant tools plus original twelve-month funding-readiness and five-proposal-type vector illustrations; updated bilingual motivational tagline without promising awards.
+- Added /year-plan as a one-time Claude Code AI-host planning playbook using verified calls and private CV facts; does not activate background monitoring or add a Python scheduler.
+- Added scheme-specific writing strategies for fellowships, PI-led research grants, consortia, innovation projects and past-impact awards, integrated into Prepare/Apply.
+
 - Added `/match` (with `/rank` alias), a separate `/prepare` command and an explicit applicant-reviewed `prepare-complete` gate ahead of `/apply`.
 - Expanded the private application state graph: selected → preparing → prepared → drafting; recorded funder-specific research strategy, section outlines, confirmed CV evidence facts and PI/Host/budget conditions.
 - `/apply` now refuses to jump straight from matching to proposal drafting; a conditional host may support an exploratory concept but never final submission-ready approval.

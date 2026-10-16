@@ -129,3 +129,11 @@ Save actual submission outcomes only with applicant approval and receipt; the da
 - **Requires an AI host with real online research and writing tools:** searching other official portals, reviewing full guidance, producing source-grounded proposal prose, independent content review, generating editable documents.
 - **Requires an applicant/institution:** PI or Host acceptance, internal deadlines, budgets, signature and actual submission.
 - The offline sample tests use fictional people and funding calls. Never advertise test examples as live funding.
+
+## Optional /year-plan — twelve months of readiness
+
+After /setup, the user may run `/year-plan` in Claude Code. The AI host reads private CV/eligibility facts and currently verified call records, then generates private/annual-plan.md with a month-by-month list of evidence, PI/host, scientific and submission-preparation actions. Real official funder and institutional deadlines take priority; unknown dates trigger a verification step. The public roadmap is illustrative. No unattended monitoring or reminders are activated. See [the roadmap](YEAR-ROUND-READINESS.md).
+
+## Scheme-specific grant narratives
+
+Read [the writing strategies](PROPOSAL-STRATEGIES.md) before /prepare and /apply. This separates fellowship independence, PI-led research, consortium work packages, industry/innovation validation and demonstrated impact, subordinate to each real call.

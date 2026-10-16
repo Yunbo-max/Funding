@@ -2,7 +2,7 @@
 
 **Do not skip /prepare.** This command requires a user-reviewed prepared research strategy for the exact call and route; **workspace.py apply** enforces the stage.
 
-1. Read the confirmed private preparation.json/preparation.md, actual official current-round form and requirements, confirmed CV facts and relevant source papers. If preparation is still incomplete, return to /prepare.
+1. Read the confirmed private preparation.json/preparation.md, actual official current-round form and requirements, confirmed CV facts and relevant source papers. Read docs/PROPOSAL-STRATEGIES.md for the relevant fellowship, project, collaborative, innovation or impact framing, always subordinated to the specific official scheme. If preparation is still incomplete, return to /prepare.
 2. Run **python3 skills/funding-autopilot/scripts/workspace.py apply --key call-EXACT-KEY** (route is inherited from Prepare). The CLI creates only the call-shaped proposal.md scaffold and moves the application to drafting. It does not generate substantive grant prose.
 3. The AI host **must draft complete real sections** using the exact scheme section IDs, word limits, evaluation criteria and user-approved research strategy: question, novelty, objective, method, comparators, work packages, milestones, impact, Host/PI, salary/budget, ethics/data and risk as required. Create a private proposal.json with actual claims, verified evidence IDs, required documents and approvals.
 4. Run independent **eligibility/compliance** and **scientific-merit** reviews. Revise specific deficiencies. Validate word/page limits, attachments and evidence using funding.py audit, then render/read actual documents using available DOCX/PDF/LaTeX tools when requested.

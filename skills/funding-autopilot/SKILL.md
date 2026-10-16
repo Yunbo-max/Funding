@@ -130,3 +130,11 @@ This workflow is on-demand only. The Python CLI does **not** contain an LLM, doe
 ## Canonical v0.4 journey
 
 **/setup → /search → /match → /prepare → /apply → /outcome**. Legacy /rank remains an alias for /match. The Python pipeline enforces a preparation stage between selected funding and proposal writing. See the [six-stage README diagram](../../assets/workflow.svg). It is a static illustration, not a running Web UI.
+
+## Year-round readiness and funding-type strategies
+
+For a user-requested year-long plan, load [the year-plan playbook](commands/09-year-plan.md) and [the roadmap](../../docs/YEAR-ROUND-READINESS.md). The web-enabled AI host uses the private, user-confirmed uploaded CV profile and actual checked funder/institutional deadlines to write private/annual-plan.md for twelve consecutive months. Unknown deadlines stay unknown. This is a one-time planning document, **not** a background scheduler; workspace.py has no autonomous year-plan command.
+
+Before /prepare and /apply, read [scheme-specific writing patterns](../../docs/PROPOSAL-STRATEGIES.md). Fellowships stress researcher independence; PI-led research projects stress the scientific hypothesis and method; consortia stress partner roles; innovation projects stress beneficiary needs and feasibility; impact awards stress **past verified external impact**. The actual official call supersedes every pattern. Do not claim to be the first grant-writing system or imply applications are guaranteed to succeed.
+
+The public [12-month roadmap](../../assets/yearly-roadmap.svg) and [writing-strategies infographic](../../assets/proposal-strategies.svg) are illustrations, not screenshots or real funder timetables.

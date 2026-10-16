@@ -6,6 +6,7 @@ This is an open-source, general-purpose researcher funding workspace, modeled on
 
 - `/setup` — require the user-uploaded CV; make a private profile, collect only important preferences and career milestones, ask the user to review facts.
 - `/search` — plan research across the user's **chosen countries or worldwide**, with country-specific queries and official-source coverage records; UKRI RSS is an optional UK source only, other regions use actual authorized host web tools/adapters. Do not interpret portal hits as eligibility.
+- `/year-plan` — create a one-time private, deadline-aware twelve-month plan from the reviewed CV and verified opportunities; never imply this starts background monitoring.
 - `/match` (legacy `/rank`) — verify official round, researcher/PI/Host eligibility, institutional deadlines, and research fit.
 - `/prepare` — develop a defensible science plan, CV evidence, PI/Host strategy, budget and funder-field outlines; require applicant-reviewed completion.
 - `/apply` — use the completed Prepare packet to draft actual required proposal sections, review content, format documents and audit compliance.
@@ -27,3 +28,5 @@ The local runner is `python3 skills/funding-autopilot/scripts/workspace.py`; ref
 9. Do not claim all sources are automated: local CLI supports UKRI RSS discovery and importing official-page leads collected by the AI host, not unrestricted cross-funder scraping.
 
 Stages include **selected → preparing → prepared → drafting**; the application writer cannot jump directly from matching to drafting. A prepared plan may retain documented unresolved PI/Host facts, but a final submission-ready application cannot.
+
+Use docs/PROPOSAL-STRATEGIES.md during Prepare and Apply to fit the official requirements of fellowships, PI-led projects, collaborative grants, industry/innovation programmes and impact awards. Never claim world-first status or guaranteed funding. Competitor comparison must credit actual publicly documented products and our weaker built-in live grant-source coverage.

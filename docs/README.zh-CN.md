@@ -1,5 +1,9 @@
 # Funding Autopilot 中文快速入门
 
+**没有申请不到 Funding 的研究人员，只有没有时刻准备的人。**
+
+*这是鼓励提前准备的项目口号，不代表资助申请一定成功。*
+
 **服务全球研究者、全球不同国家/地区的 Funding 申请。** 用户可搜索英国、欧洲、美国、加拿大、澳大利亚、日本、新加坡、巴西、南非、新西兰及其他地区的官方研究资助来源。此为全球适用的 Agent 流程，而不是已有全球完整实时资助数据库：项目内置 UKRI RSS；其他地区的搜索依赖具备网页工具的 AI Agent 或后来新增的来源适配器。必须核查本轮是否接受国外申请人、是否需要当地 PI/Host，以及校内截止日期。
 
 这是一个面向研究人员的开源 Agent Skill。**先上传 CV，再定向搜索真实 Funding，再核验资格，再写申请。** 它不是实时奖学金数据库，也不意味着自动提交或后台运行。
@@ -55,3 +59,15 @@
 **Apply（申请写作）** 必须在准备状态为 `prepared` 后才能启动。Agent 根据已审阅的研究策略写出真实、符合资助方要求的 Proposal、配套材料并进行内容和格式审查；`workspace.py apply` 只生成草稿结构，绝不意味着已经提交。GitHub README 现已加入原创封面和六阶段图片。
 
 所有研究计划、简历及潜在 PI 的邮件草稿放在被 Git 忽略的 `private/`，不会自动发送或公开。
+
+## 全年的科研 Funding 准备与写作
+
+![全年 12 个月 Funding 准备图](../assets/yearly-roadmap.svg)
+
+Claude Code 内的 `/year-plan` 命令可让 AI Agent 根据已审核的 CV、申请人研究方向和已核验的真实 Funding 截止日期，生成仅存在于 `private/annual-plan.md` 的个人全年准备计划。这不是自动持续监控或提醒。
+
+![五种 Funding 的申请叙事](../assets/proposal-strategies.svg)
+
+Fellowship 重点是学术独立性与培养计划；研究项目资助重点是研究问题、方法、强基线、工作包和预算；合作资助重点是团队分工、治理与贡献；创新项目重点是用户需求和里程碑；Impact Award 重点是**已经产生的外部影响和真实独立证据**。每个项目必须以它自己的当轮申请指南为准。
+
+[同类项目客观对比](PROJECT-COMPARISON.md) · [各类申请书写作详解](PROPOSAL-STRATEGIES.md) · [全年计划方法](YEAR-ROUND-READINESS.md)

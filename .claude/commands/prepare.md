@@ -1,6 +1,6 @@
 # /prepare — Research strategy before proposal drafting
 
-Read **skills/funding-autopilot/commands/04-prepare.md** and **skills/funding-autopilot/references/preparation.md**. Arguments may identify a call key and independent/new_pi route.
+Read **skills/funding-autopilot/commands/04-prepare.md**, **skills/funding-autopilot/references/preparation.md**, and **docs/PROPOSAL-STRATEGIES.md**. Arguments may identify a call key and independent/new_pi route.
 
 1. Confirm the intended funding call and route were checked against the exact official current-round guidance and institutional deadline. The researcher's uploaded CV has been reviewed.
 2. Run **python3 skills/funding-autopilot/scripts/workspace.py prepare --key call-EXACT-KEY --route independent** (or new_pi). It creates the private planning files and stage preparing, not drafting.

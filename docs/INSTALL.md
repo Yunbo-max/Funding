@@ -108,3 +108,7 @@ python3 skills/funding-autopilot/scripts/workspace.py apply --key call-VERIFIED-
 ```
 
 `apply` starts writing the complete proposal from the reviewed plan. Its CLI only scaffolds the specific sections; the agent handles substantive writing and critical review. Neither status grants permission to submit automatically. [Preparation contract](PREPARATION-CONTRACT.md).
+
+## A year-long plan (agent-assisted)
+
+In Claude Code, use `/year-plan` after `/setup` to create a private 12-month readiness document from approved CV facts and verified funding rounds. This is a **Claude Code AI-host command**, not a new workspace.py CLI subcommand. The public twelve-month SVG illustrates overlapping work, not actual funder deadlines. No monitoring or future reminders are started.

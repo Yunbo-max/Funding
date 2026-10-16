@@ -36,3 +36,7 @@ An independent fellowship can still require a receiving host or mentor. A new-PI
 ## Safety
 
 All preparation files remain in ignored private/ directories. The user may approve a strategy without authorizing messages or a grant submission. No GitHub Actions, workflow dispatch or automatic sending.
+
+## Different calls require different research arguments
+
+Read [the grant writing matrix](../../../docs/PROPOSAL-STRATEGIES.md). Choose applicant independence for fellowships, scientifically falsifiable mechanisms for project grants, contractual partner roles for consortia, validated need for innovation, and real measured external outcomes for impact awards. Use the particular funder's current requirements over these general patterns.
