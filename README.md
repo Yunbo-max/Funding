@@ -19,12 +19,20 @@
 
 *A motto about sustained preparation—not a guarantee of funding. Eligibility, access, and selection remain real constraints.*
 
-## Our difference: prepare the researcher, not only the proposal
+## Every researcher has a unique story. Find the funding that fits yours.
 
-- **CV-grounded and reusable.** Keep evidence-backed publications, projects, career milestones, skills and research directions in a private profile.
-- **Eligibility before ranking.** Distinguish thesis submission vs PhD award, independent fellowship vs **new-PI/host-led** project, personal salary vs institutional grant budget, and university internal vs funder deadlines.
-- **Match → Prepare → Apply.** Develop a specific research question, closest alternatives, feasible experiments, host and budget strategy **before** drafting the application sections.
-- **Learn from every application.** Preserve actual source evidence, blockers, drafts, human-approved outcomes and negative results. A good topic match alone is not an eligibility pass.
+No two researchers have the same combination of experiences, questions, skills and ambitions. **Your background is not something to squeeze into a generic grant template—it is the starting point for finding the right research direction.**
+
+Funding Autopilot helps turn that distinctive background into a **truthful, evidence-backed story** tailored to the funding opportunity:
+
+- **Discover what makes you different.** Understand the real contributions behind your CV—papers, projects, unconventional paths, methods and the problems you care about.
+- **Find where your story fits.** Explore research directions and funding schemes that suit your strengths, career stage, intended impact and preferred PI/host—not just your keywords.
+- **Explain why *you* should pursue *this* idea.** Connect your past work to a specific unmet problem, a credible next research step and the funder's actual priorities. Different researchers applying to the same call should not receive the same proposal.
+- **Turn the story into a rigorous application.** In **Match → Prepare → Apply**, verify eligibility, formulate testable aims, map evidence to the scheme's criteria, then write and critically review the proposal.
+
+**Your experience → Your research direction → The right funding call → Your evidence-backed proposal.**
+
+*Storytelling means finding a clear argument in what you have genuinely done and can realistically do next—never inventing achievements, results or partnerships.*
 
 ![Six-stage Funding Autopilot process: Setup → Search → Match → Prepare → Apply → Track](assets/workflow.svg)
 

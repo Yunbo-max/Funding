@@ -1,5 +1,7 @@
 # How to write for different funding schemes
 
+**Different researchers also need different research arguments.** The aim is to identify the strongest truthful connection between this applicant's distinctive academic path, a promising next research question and a specific funder's purpose—not to reuse one attractive AI-written narrative for everyone.
+
 **Different calls need different research arguments.** The applicant's CV is a trusted input *only for observed and user-confirmed facts*, not a justification for generic grant text. A funder's current-round form, review criteria, project restrictions and exact section limits override every pattern below. First use `/match` to check eligibility, then `/prepare` to choose the argument, then `/apply` to draft each required section.
 
 ![Five scheme-specific application narratives](../assets/proposal-strategies.svg)

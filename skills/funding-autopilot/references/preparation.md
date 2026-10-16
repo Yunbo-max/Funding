@@ -14,6 +14,18 @@ The local sequence is **selected → preparing → prepared → drafting → dra
 
 The built-in checker establishes only basic integrity and minimum structure. It cannot establish scientific truth, novelty, full institutional eligibility, budget correctness or authentic PI agreement. Complete critical scientific and compliance review occurs during Apply.
 
+## Personal research narrative: background → direction → fit
+
+Before producing the plan, answer five questions using **specific CV evidence and the applicant's confirmed preferences**:
+
+1. **What is distinctive about this researcher?** Identify their actual contributions and transferable capabilities—not prestige, publication count alone, or an inferred skill.
+2. **What question follows naturally from their past work?** Find a research direction that makes intellectual sense given their experiences, including non-linear or cross-disciplinary paths.
+3. **Why does this funding route fit that direction?** Compare plausible alternative research framings and independently viable or new-PI/host pathways, rather than searching only for the closest keyword.
+4. **Why this applicant, this project, this funder, now?** Build a coherent funder-specific argument from **verified past work → precise problem → testable future contribution → public programme priorities**.
+5. **What might defeat that narrative?** Identify missing data, weak baselines, a better-aligned funding call, uncertain applicant/host eligibility, overly ambitious work packages, or claims the CV does not support.
+
+Write these as a **short narrative rationale** in the human-readable private `preparation.md`, while using the structured `preparation.json` research question, approach, evaluation, fact IDs and section outlines for machine checks. Show alternative possible directions where genuinely supported; let the applicant choose. **Never bend the facts to fit a funder, assume collaboration consent, or transform a proposed future result into a completed achievement.**
+
 ## Required plan keys
 
 | Key | Source and meaning |

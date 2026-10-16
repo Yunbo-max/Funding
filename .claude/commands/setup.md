@@ -5,7 +5,7 @@ Use `skills/funding-autopilot/SKILL.md`, `commands/01-setup.md` and `references/
 **The required input is a CV that the user has actually uploaded or made accessible as a local PDF, DOCX, TXT or MD.** A personal website cannot replace it. Do not pretend an inaccessible attachment was read.
 
 1. Explain the privacy model before creating files in a public repository: all applicant data stay under `private/`, ignored by Git. Never push or paste the profile into GitHub issues. Verify a clean writable local runtime exists.
-2. Read the CV and extract factual research topics, career stage, publications/projects and current employment. Present uncertainty, source pages and contradictions. Ask only for applicant preferences needed to decide next action: geography, independence vs new PI, salary requirement, research aim, expected/actual thesis submission, PhD award/start date. Never infer nationality, visas or host permission.
+2. Read the CV and extract factual research topics, career stage, publications/projects and current employment. **Capture the applicant's distinctive research trajectory:** which contributions are genuinely theirs, transferable methodological strengths, interdisciplinary experience, meaningful transitions and the research questions they personally want to tackle. Propose potential narrative angles only as *interpretations for the user's review*, not as CV facts. Present uncertainty, source pages and contradictions. Ask only for applicant preferences needed to decide next action: geography, independence vs new PI, salary requirement, research aim, expected/actual thesis submission, PhD award/start date. Never infer nationality, visas or host permission.
 3. Run the CLI, selecting CV-supported research topic terms, e.g.:
 
 ```bash
