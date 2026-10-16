@@ -1,5 +1,7 @@
 # /discover — Multi-source opportunity discovery
 
+> **v0.3 user interface:** `workspace.py search` for the UKRI RSS feed or `workspace.py search --input-file <agent-discovered-leads.json>` for other official sources. `workspace.py verify` promotes a lead to a specific verified round and prevents accidental repeated unknown-round entries. The lower-level `pipeline.py ingest` remains available for automation adapters.
+
 Input: uploaded-CV-grounded profile, constraints and search horizon.
 
 1. Generate distinct search families (research terms, foundational methods, interdisciplinary applications, individual fellowships, externally hosted fellowship, new PI grants, salary-funded postdocs). Search broadly across the requested geographic regions; do not anchor to the current supervisor.

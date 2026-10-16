@@ -22,3 +22,7 @@ python3 skills/funding-autopilot/scripts/workspace.py setup-confirm --confirm-re
 ```
 
 Never overwrite an existing profile without an explicit replacement decision. The CLI's `--replace` is destructive, not a default. Resume with `/search`.
+
+### Existing profile update
+
+If the applicant wants to change fields but the uploaded CV and saved profile already exist, use `/setup-update` or `workspace.py setup-update --topics "..." --regions "..." --salary yes|no --new-group yes|no`. Preserve the CV hash, prior grant ledger and other evidence; reset profile confirmation and request a fresh user review. Never treat an expected future PhD milestone as a completed one.

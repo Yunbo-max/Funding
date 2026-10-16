@@ -17,3 +17,7 @@ dist/
 build/
 *.egg-info/
 .DS_Store
+
+# Per-user local workspaces and machine-specific agent permissions
+**/private/
+.claude/settings.local.json

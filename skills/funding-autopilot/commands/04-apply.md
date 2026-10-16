@@ -1,5 +1,7 @@
 # /apply — Funder-specific drafter/reviewer workflow
 
+> **v0.3:** Run `workspace.py apply --key <verified-call-key> --route independent|new_pi` for a private template/requirements/manifest and optional PI outreach. **Continue to author complete funder-specific proposal prose** in the chosen artifact; the CLI only creates the scaffold. Before `workspace.py ready`, a reviewed `proposal.json` must satisfy `funding.py audit` and applicable applicant/PI/host approvals. This still does not submit a proposal.
+
 Input: an explicitly chosen funding call/round and applicant route, plus CV-based evidence.
 
 1. Check `rank` state and re-fetch the official call and receiving host's current internal rules. A conditional call may receive **concept notes** but must not be represented as a ready/submittable packet. Identify actual applicant, PI, employee, fellowship holder and budget holder.

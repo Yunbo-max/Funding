@@ -71,3 +71,20 @@ python3 skills/funding-autopilot/sources/ukri_rss.py search --query "machine lea
 ```
 
 This contacts UKRI's public RSS URL only when the host permits HTTPS. It searches recently syndicated calls, not the full UKRI funding catalogue; never treat results as verified eligibility. For offline tests use the optional `--xml-file` argument with local fixtures. See [source documentation](../skills/funding-autopilot/sources/README.md).
+
+## User-facing Claude Code commands and local workbench (v0.3)
+
+Clone this repository, open its root as the working directory in Claude Code, then type `/setup`, `/search`, `/rank`, `/apply`, `/outcome` or `/status`. The instructions for these commands are in `.claude/commands/`. They call the same Skill and Python helper; no separate plugin installation is needed in a standard Claude Code project that supports repository commands.
+
+For any other Agent Skills host, copy `skills/funding-autopilot/` to its recognized skills directory and request the workflow in a chat. The slash commands are Claude Code-specific; they do not automatically appear as slash commands in ChatGPT.
+
+A researcher can change research areas or preferences **without uploading the same CV again**:
+
+```bash
+python3 skills/funding-autopilot/scripts/workspace.py setup-update --topics "machine learning,agent safety" --salary yes --new-group yes
+python3 skills/funding-autopilot/scripts/workspace.py setup-review
+# Only after explicit applicant approval:
+python3 skills/funding-autopilot/scripts/workspace.py setup-confirm --confirm-reviewed
+```
+
+Read [the user walkthrough](USER-WORKFLOW.md) for the entire on-demand sequence and safety model. The optional `[documents]` dependency supplies PDF/DOCX CV parsers, but full PDF/DOCX proposal generation uses the authorized AI host's artifact tools. Local tests do not establish live website reachability or platform account access.

@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.0 — 2026-10-16
+
+- Added **native Claude Code commands** `/setup`, `/search`, `/rank`, `/apply`, `/outcome`, and `/status` with a unified on-demand researcher application journey.
+- Added `skills/funding-autopilot/scripts/workspace.py`: CLI onboarding from an uploaded CV, user-reviewed profile, safe incremental preference edits, UKRI RSS or AI-host sourced lead ingestion, exact round promotion, independent/new-PI route decisions, funder-specific local application folders, PI outreach scaffolds and receipt-backed tracking.
+- Prevented planned doctoral submission/degree award dates from being misrepresented as completed milestones, including future actual dates.
+- Repeated searches of already-verified calls avoid an extra `unverified` duplicate and trigger official round rechecks.
+- Added call-specific ready/audit constraints. A structured draft is not treated as submitted; new PI or host approvals remain explicit.
+- Added 14 new fictional-fixture user-workflow tests. All 14 passed in the isolated local test harness using **interface-equivalent test doubles** for the existing `funding.py` and `pipeline.py`; the old core regression suite and real external source integration were **not** rerun in that same harness. See [validation notes](docs/VALIDATION-0.3.md).
+- No GitHub Actions, workflow runs, automatic mailing, unattended schedulers, real grant submissions or public CV files.
+
 ## 0.2.0 — 2026-10-16
 
 - Studied [MadsLorentzen/ai-job-search](https://github.com/MadsLorentzen/ai-job-search) core architecture, command workflows, portal search adapters, ranking/state helpers, document rendering and layout, privacy security, outcomes and tests. Maintained attribution and independently authored source.

@@ -26,3 +26,18 @@
 - 不要把 CV、研究想法、私人申请书提交到本公共仓库；默认写入本地 `private/`。
 - 如果另一个 PI 接收，需要确认其 PI 资格、大学的内部 deadline、薪资和正式雇佣机制，而不只确认研究方向一致。
 - GitHub 只作为开源代码和脱敏日志的存储，不使用 GitHub Actions 或 workflows。继续监测需真正的定时工具，不是仅靠 Skill 文件。
+
+## 新版命令（0.3.0）
+
+可在 Claude Code 中打开这个 GitHub 仓库后使用：
+
+- `/setup`：上传 CV，建立本地私有科研档案，用户审核确认，记录是否希望换 PI、个人薪资需求和毕业阶段。
+- `/search`：从 UKRI RSS 以及 Agent 可访问的其他官方资助页面检索；保存而不虚构机会。
+- `/rank`：按实际身份/导师资格/学校批准/截止日期筛选，条件不足的项目保留为待确认。
+- `/apply`：根据具体资助方表格形成申请目录，让 AI 撰写完整研究计划，经过批判性审查再生成所需格式。
+- `/outcome`：追踪真实提交、审核与最终结果，必须有用户确认与提交/决定证明。
+- `/status`：显示申请历史以及等待补充的资料。
+
+如需不重复上传 CV 地改变偏好：`workspace.py setup-update --topics "..." --regions "UK,EU" --new-group yes --salary yes`，随后重新审核个人信息。`private/` 中的 CV、申请书、预算、记录不会推送至公共 GitHub。
+
+注意：Python 工作台本身没有 LLM；UKRI RSS 提供部分自动搜索，其他基金会依赖 Agent 的实时网页访问。生成完整的正文、DOCX/PDF 以及最终提交需对应平台和人工授权；Skill 本身不会调用 GitHub Actions 或启动后台进程。

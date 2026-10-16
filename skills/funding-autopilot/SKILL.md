@@ -5,7 +5,7 @@ license: MIT
 compatibility: "Requires a host able to read uploaded CVs and browse current official funding pages; optional local Python 3.10+ helper."
 metadata:
   author: Yunbo-max
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
 # Funding Autopilot
@@ -94,3 +94,19 @@ When a local runtime exists, use [the private pipeline record contract](referenc
 ## Source adapter currently bundled
 
 [UKRI official RSS](sources/README.md) provides public lead discovery via `sources/ukri_rss.py search` and cautious `detail` retrieval. Its RSS results are *not verified calls*: send them through the normal current-round official-guidance and internal-deadline gates. The feed covers only currently syndicated entries, not the complete UKRI catalogue. No applicant CV travels in RSS requests.
+
+## v0.3 user experience: setup, find, rank, apply, track
+
+Prefer the **real workbench** over asking users to manually stitch together unrelated Python commands. The canonical CLI is [`scripts/workspace.py`](scripts/workspace.py), which integrates CV intake, reviewed profiles, feed/source leads, verified round promotion, route-specific eligibility, application packet scaffolds and recorded outcomes. The supported Claude Code slash commands are in the repository's `.claude/commands/`; other skill-enabled hosts can use the same instructions in natural language.
+
+**Interactive `/setup`:** an actual uploaded CV is mandatory. Run `workspace.py setup --cv <path> --topics "<CV-supported areas>"`, present `setup-review`, then run `setup-confirm --confirm-reviewed` only if the user explicitly accepts the facts. Later profile changes use `setup-update` without another CV upload, and reset review status until reapproved.
+
+**`/search`:** use a genuine permitted UKRI RSS fetch or import other official funder leads gathered by host browsing. Read complete source guidance and promote provisional `round=unverified` leads through `workspace.py verify --key <key> --call-file <official-guidance-record.json>`. Repeated sightings of the same round/URL should not create fake fresh opportunities; recheck the official round.
+
+**`/rank`:** re-run the concrete requirements, including user preference, PI/host, degree milestone, salary possibility and new receiving institution's deadlines. Never score a missing PI approval as eligible. Call `workspace.py rank` after current-round verification.
+
+**`/apply`:** call `workspace.py apply --key <key> --route independent|new_pi` to create the **private** call-shaped proposal scaffold and PI outreach draft if relevant. Then the **AI host must actually draft the complete required proposal sections**, with verified CV and literature evidence, budget constraints, independent content critique, compliance audit and actual rendered-document inspection as applicable. An empty scaffold is *not* a complete application.
+
+**`/outcome`:** `workspace.py ready` only after an audited and approved structured draft; actual submission/decision requires separate documented receipts and user confirmation. `workspace.py status` and the offline pipeline HTML report expose the private timeline.
+
+This workflow is on-demand only. The Python CLI does **not** contain an LLM, does **not** contact unregistered funding portals, does **not** submit to funding portals and does **not** run perpetually. See [complete user walkthrough](../../docs/USER-WORKFLOW.md) and [v0.3 validation notes](../../docs/VALIDATION-0.3.md).

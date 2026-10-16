@@ -1,5 +1,7 @@
 # /outcome — Application tracking and learning
 
+> **v0.3 user command:** `workspace.py outcome --key <exact-call-key> --to submitted --confirmed --receipt <genuine-portal-reference>`; real award/rejection outcomes require their own documentary reference. Never advance from `draft_ready` without an actual submission receipt.
+
 1. Load the private ledger and identify exactly one programme **round** and application route; if ambiguous, list the possibilities.
 2. Separate stages: discovered, shortlisted, selected, drafting, draft_ready, submitted, under_review, awarded, rejected, withdrawn and archived. Treat `draft_ready` as **not submitted**. See `../references/pipeline-records.md` for transition rules.
 3. For submitted or final outcomes, require user confirmation and an actual submission/decision reference; do not infer from an unrelated email snippet or a pasted grant portal page. Use `pipeline.py advance --confirm --evidence-ref <private-receipt-id>` only after explicit user approval.
