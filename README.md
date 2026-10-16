@@ -3,14 +3,13 @@
 </p>
 
 <h1 align="center">Funding Autopilot</h1>
-<h3 align="center">没有申请不到 Funding 的研究人员，只有没有时刻准备的人。</h3>
-<p align="center"><em>Funding favors the prepared. Start before the call opens.</em></p>
+<h3 align="center">There are no researchers who cannot secure funding—only those who are not ready when opportunity arrives.</h3>
+<p align="center"><em>Start long before the deadline. Stay ready when the opportunity comes.</em></p>
 
 <p align="center">
   <a href="#quick-start">Quick start</a> ·
   <a href="#the-12-month-funding-roadmap">12-month roadmap</a> ·
   <a href="#writing-for-different-funding-schemes">Proposal strategies</a> ·
-  <a href="docs/README.zh-CN.md">中文</a> ·
   <a href="docs/USER-WORKFLOW.md">Full guide</a>
 </p>
 
@@ -18,7 +17,7 @@
 
 **Global by design:** Search in the UK, Europe, the US, Canada, Australia, Asia, and beyond using an AI host with web/search access. **This is not an exhaustive real-time worldwide grant database.** The standalone connector currently covers **UKRI's recent RSS feed**; other regions depend on host-side official-source research or additional adapters. Eligibility and institutional rules differ by country and scheme.
 
-*The headline is a motivational motto about being prepared, not a promise that anyone will win a grant.*
+*A motto about sustained preparation—not a guarantee of funding. Eligibility, access, and selection remain real constraints.*
 
 ## Our difference: prepare the researcher, not only the proposal
 
