@@ -114,9 +114,25 @@ class PipelineTests(unittest.TestCase):
         self.state['calls'][self.key]['evaluations'] = {'new_pi': {'status': 'conditional'}}
         pipeline.advance(self.state, self.key, 'shortlisted')
         pipeline.advance(self.state, self.key, 'selected', route='new_pi')
+        pipeline.advance(self.state, self.key, 'preparing')
+        with self.assertRaisesRegex(ValueError, 'preparation requires'):
+            pipeline.advance(self.state, self.key, 'prepared')
+        pipeline.advance(self.state, self.key, 'prepared',
+                         confirmed=True, evidence_ref='prep:reviewed-fictional-plan')
         pipeline.advance(self.state, self.key, 'drafting')
         with self.assertRaisesRegex(ValueError, 'eligible'):
             pipeline.advance(self.state, self.key, 'draft_ready')
+
+    def test_preparation_cannot_skip_to_drafting(self):
+        pipeline.ingest(self.state, [candidate()])
+        self.state['calls'][self.key]['evaluations'] = {'independent': {'status': 'eligible'}}
+        pipeline.advance(self.state, self.key, 'shortlisted')
+        pipeline.advance(self.state, self.key, 'selected', route='independent')
+        with self.assertRaisesRegex(ValueError, 'invalid transition'):
+            pipeline.advance(self.state, self.key, 'drafting')
+        pipeline.advance(self.state, self.key, 'preparing')
+        with self.assertRaisesRegex(ValueError, 'invalid transition'):
+            pipeline.advance(self.state, self.key, 'drafting')
 
     def test_outcome_requires_confirmation(self):
         pipeline.ingest(self.state, [candidate()])
