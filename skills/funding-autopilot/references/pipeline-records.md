@@ -8,7 +8,7 @@ The stable key is `sha256(normalized funder + official programme identifier + ro
 
 `private/ledger.json` holds a `calls` dictionary indexed by that key. Each record contains `call` (full agent-populated source data), `sources`, `first_seen`, `last_seen`, `stage`, `route`, `evaluations`, `history`.
 
-`status` in an `evaluation` is `eligible`, `conditional`, `unverified`, `ineligible`, `expired`. The application's independent `stage` is `discovered`, `shortlisted`, `selected`, `drafting`, `draft_ready`, `submitted`, `under_review`, `awarded`, `rejected`, `withdrawn`, or `archived`. Never write a status phrase into the other field.
+`status` in an `evaluation` is `eligible`, `conditional`, `unverified`, `ineligible`, `expired`. The application's independent `stage` is `discovered`, `shortlisted`, `selected`, `preparing`, `prepared`, `drafting`, `draft_ready`, `submitted`, `under_review`, `awarded`, `rejected`, `withdrawn`, or `archived`. Never write a status phrase into the other field.
 
 ## Commands
 
@@ -29,3 +29,7 @@ Keep the ledger and generated HTML under a resolved `private/` directory, never 
 ## Authority/limits
 
 The helper validates a subset of the encoded constraints but cannot certify official guidance was read correctly; only a real evidence-grounded host review and the institution may establish an applicant's actual eligibility. There is no automatic contact, submission, mail sync, scheduling or live browsing in the CLI. Use the appropriate host tool only on explicit authorization.
+
+## v0.4 Match / Prepare / Apply barrier
+
+The user journey is **setup → search → match (legacy rank) → prepare → apply → outcome**. The application state graph adds **selected → preparing → prepared → drafting**. Entering prepared requires an explicitly reviewed strategy and evidence reference; matched results cannot jump directly to drafting. A prepared strategy may retain known Host or budget dependencies, but draft_ready requires an independently verified eligible route and final applicant/Host review. See [preparation.md](preparation.md).

@@ -5,7 +5,7 @@ license: MIT
 compatibility: "Requires a host able to read uploaded CVs and browse current official funding pages; optional local Python 3.10+ helper."
 metadata:
   author: Yunbo-max
-  version: "0.3.0"
+  version: "0.4.0"
 ---
 
 # Funding Autopilot
@@ -45,9 +45,17 @@ Offer the independent, new-PI, and fellowship/postdoc routes as distinct options
 
 Use [records](references/records.md) for machine-readable representations. The local script can check conservative gates for structured official-call data, but it **does not perform web research or certify official-source authenticity**.
 
+### Gate 3.5 — Prepare the research before Apply
+
+**Match is not Prepare; Prepare is not Apply.** Select a specific officially verified current-round call and an independent or new-PI applicant route. Run **workspace.py prepare --key CALL_KEY --route independent|new_pi** to generate a private strategy packet. This does **not** create a proposal draft.
+
+Read [the preparation module](commands/04-prepare.md) and [the plan contract](references/preparation.md). The AI host must fill the substantive research problem/approach/evaluation, map user-confirmed CV evidence to each required official form section, record real new-PI/Host and salary/budget conditions, materials, risks and unresolved institutional approvals. A proposal scaffold or placeholder is not an approved strategy.
+
+Present the plan to the applicant. Only after explicit approval, run **workspace.py prepare-complete --key CALL_KEY --confirm-reviewed**. The local checker enforces plan/CV/call identity and required sourced field structure but cannot guarantee scientific novelty or Host acceptance. Conditional opportunities may proceed as exploratory concepts; they cannot become submission-ready until eligibility requirements are met.
+
 ### Gate 4 — Write to the *exact funder form*
 
-Only after a specific opportunity and application path are chosen, read [proposal writing](references/proposal-writing.md) and [proposal template](assets/proposal-template.md). Load the original scheme guidance, the latest forms, evaluation rubric and verified CV facts, plus real research outputs the user authorizes. Prepare the outline/requirements matrix first.
+Only after a selected opportunity and applicant route have an explicitly reviewed **prepared** strategy, read [proposal writing](references/proposal-writing.md) and [proposal template](assets/proposal-template.md). Load the original scheme guidance, the latest forms, evaluation rubric and verified CV facts, plus real research outputs the user authorizes. Prepare the outline/requirements matrix first.
 
 Develop a rigorous research narrative: problem and relevance to the funder; gap and strongest prior approach; original question, theoretical or empirical mechanism and falsifiable hypothesis; feasible work packages, milestones, outcomes and risk; why this applicant/new PI/host; evaluation and impact; defensible budget. Borrow Research Autopilot's *evidence → prediction → method → comparative test → interpretation* reasoning, not its entire runtime or mechanical mathematics traversal. No fabricated results, collaborations, matched funds, ethics approvals or impact.
 
@@ -110,3 +118,7 @@ Prefer the **real workbench** over asking users to manually stitch together unre
 **`/outcome`:** `workspace.py ready` only after an audited and approved structured draft; actual submission/decision requires separate documented receipts and user confirmation. `workspace.py status` and the offline pipeline HTML report expose the private timeline.
 
 This workflow is on-demand only. The Python CLI does **not** contain an LLM, does **not** contact unregistered funding portals, does **not** submit to funding portals and does **not** run perpetually. See [complete user walkthrough](../../docs/USER-WORKFLOW.md) and [v0.3 validation notes](../../docs/VALIDATION-0.3.md).
+
+## Canonical v0.4 journey
+
+**/setup → /search → /match → /prepare → /apply → /outcome**. Legacy /rank remains an alias for /match. The Python pipeline enforces a preparation stage between selected funding and proposal writing. See the [six-stage README diagram](../../assets/workflow.svg). It is a static illustration, not a running Web UI.

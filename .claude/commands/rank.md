@@ -1,4 +1,4 @@
-# /rank — Check hard funding requirements before scoring
+# /rank — Backward-compatible alias for /match
 
 Read `skills/funding-autopilot/commands/03-rank.md` and `references/eligibility.md`. Use `$ARGUMENTS` to focus call or research area.
 
@@ -12,4 +12,4 @@ python3 skills/funding-autopilot/scripts/workspace.py rank --limit 20
 ```
 
 5. Present `eligible`, `conditional`, `unverified`, `ineligible`, and `expired` as separate categories. Each candidate has source links/locators, shortest true deadline, role, salary possibility and exact unresolved blocker. A fit score is only heuristic relevance, never an award probability.
-6. Recommend applications worth time and explain both independence and the new-PI alternative. When user chooses one, use `/apply`. Store the chosen call's key and **route**; do not confuse two grants with the same programme title from different rounds.
+6. Recommend applications worth time and explain both independence and the new-PI alternative. When user chooses one, use **`/prepare` before `/apply`**. Store the chosen call's key and **route**; do not confuse two grants with the same programme title from different rounds.

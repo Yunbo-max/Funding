@@ -6,8 +6,9 @@ This is an open-source, general-purpose researcher funding workspace, modeled on
 
 - `/setup` — require the user-uploaded CV; make a private profile, collect only important preferences and career milestones, ask the user to review facts.
 - `/search` — discover official opportunities across relevant regions and funding modalities; use UKRI RSS as one source and direct web/official portals for all other sources; don't interpret search hits as eligibility.
-- `/rank` — verify specific round rules and institutional deadlines, then rank only viable independent/fellow/new-PI application routes.
-- `/apply` — prepare exact scheme materials, write real CV-grounded proposal text, critique, revise and verify layout/requirements; do not stop at an empty template.
+- `/match` (legacy `/rank`) — verify official round, researcher/PI/Host eligibility, institutional deadlines, and research fit.
+- `/prepare` — develop a defensible science plan, CV evidence, PI/Host strategy, budget and funder-field outlines; require applicant-reviewed completion.
+- `/apply` — use the completed Prepare packet to draft actual required proposal sections, review content, format documents and audit compliance.
 - `/outcome` — record only documented submission, award, rejection or withdrawal with the applicant's explicit confirmation and real receipt.
 - `/status` — show saved opportunity states and bottlenecks without republishing private data.
 
@@ -24,3 +25,5 @@ The local runner is `python3 skills/funding-autopilot/scripts/workspace.py`; ref
 7. An AI-generated document must not be labeled `submitted`, `awarded`, `approved`, `host committed` or `publication-ready` without evidence and needed human checks.
 8. Do not send grant submissions, invitations, emails or payments without the applicant's explicit instruction and actual supported tools. No GitHub Actions, workflow runs, workflow_dispatch, workflow files or automations are installed by this repository.
 9. Do not claim all sources are automated: local CLI supports UKRI RSS discovery and importing official-page leads collected by the AI host, not unrestricted cross-funder scraping.
+
+Stages include **selected → preparing → prepared → drafting**; the application writer cannot jump directly from matching to drafting. A prepared plan may retain documented unresolved PI/Host facts, but a final submission-ready application cannot.
