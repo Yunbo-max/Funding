@@ -49,6 +49,11 @@ class UKRITests(unittest.TestCase):
         self.assertIn('retrieved_unverified', r['detail_status'])
         self.assertNotIn('bad', r['text'])
 
+    def test_redirect_to_external_domain_rejected_before_fetch(self):
+        handler = mod.OfficialOnlyRedirect()
+        with self.assertRaisesRegex(ValueError, 'UKRI'):
+            handler.redirect_request(None, None, 302, 'Found', {}, 'https://evil.example/leak')
+
     def test_reject_unsafe_detail_host(self):
         with self.assertRaisesRegex(ValueError, 'UKRI'):
             mod.detail(b'legitimate text', 'https://evil.example/opportunity/foo/')
