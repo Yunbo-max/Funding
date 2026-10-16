@@ -56,6 +56,9 @@ def setup(args, root):
     for value in (args.expected_thesis, args.submitted_thesis, args.phd_awarded, args.start_after):
         if value:
             funding.parse_date(value)
+    for actual in (args.submitted_thesis, args.phd_awarded):
+        if actual and funding.parse_date(actual) > moment().date():
+            raise ValueError('Actual thesis submission or PhD award date cannot be in the future')
     profile = funding.intake(args.cv, path)
     profile['research_terms'] = csv_list(args.topics)
     profile['preferred_routes'] = routes
@@ -75,6 +78,53 @@ def setup(args, root):
             'topics': profile['research_terms'], 'routes': profile['preferred_routes'],
             'next': 'Run setup-review, correct facts, then setup-confirm --confirm-reviewed'}
 
+
+
+def setup_update(args, root):
+    """Edit a reviewed profile without replacing its CV or old grant history."""
+    profile = profile_at(root)
+    edits = {}
+    for flag, field in (('topics', 'research_terms'), ('routes', 'preferred_routes')):
+        value = getattr(args, flag)
+        if value is not None:
+            parsed = csv_list(value)
+            if not parsed:
+                raise ValueError(flag + ' must not be empty')
+            if field == 'preferred_routes' and not set(parsed).issubset({'independent', 'new_pi'}):
+                raise ValueError('Routes must be independent and/or new_pi')
+            edits[field] = parsed
+    for flag, field in (('residence', 'residence_country'),
+                        ('expected_thesis', 'expected_phd_submission_on'),
+                        ('submitted_thesis', 'phd_submitted_on'),
+                        ('phd_awarded', 'phd_awarded_on')):
+        value = getattr(args, flag)
+        if value is not None:
+            if field.endswith('_on') and value:
+                parsed = funding.parse_date(value)
+                if field in ('phd_submitted_on', 'phd_awarded_on') and parsed > moment().date():
+                    raise ValueError('Actual doctorate milestones cannot be future dates')
+            edits[field] = value or None
+    prefs = dict(profile.get('preferences') or {})
+    for flag, field in (('goal', 'funding_goal'), ('regions', 'target_regions'),
+                        ('start_after', 'start_after'), ('salary', 'salary_required'),
+                        ('new_group', 'avoid_current_group')):
+        value = getattr(args, flag)
+        if value is not None:
+            if flag == 'start_after' and value:
+                funding.parse_date(value)
+            prefs[field] = (csv_list(value) if flag == 'regions' else
+                            (value == 'yes' if flag in ('salary', 'new_group') else value))
+            edits['preferences'] = prefs
+    if not edits:
+        raise ValueError('No changes provided; use setup-review to inspect existing profile')
+    profile.update(edits)
+    profile['fields_verified'] = False
+    profile['profile_status'] = 'needs_user_review_after_update'
+    profile['updated_at'] = moment().isoformat()
+    save(root / 'profile.json', profile)
+    return {'status': 'updated_pending_review', 'changed_fields': sorted(edits),
+            'cv_hash_unchanged': profile['cv_sha256'],
+            'next': 'Review with setup-review and confirm with setup-confirm --confirm-reviewed'}
 
 def setup_review(root):
     profile = profile_at(root)
@@ -332,6 +382,18 @@ def main(argv=None):
     s.add_argument('--submitted-thesis')
     s.add_argument('--phd-awarded')
     s.add_argument('--replace', action='store_true')
+    change = sub.add_parser('setup-update', help='Change preferences without reuploading your CV')
+    change.add_argument('--topics')
+    change.add_argument('--routes')
+    change.add_argument('--goal')
+    change.add_argument('--regions')
+    change.add_argument('--residence')
+    change.add_argument('--expected-thesis')
+    change.add_argument('--submitted-thesis')
+    change.add_argument('--phd-awarded')
+    change.add_argument('--salary', choices=['yes', 'no'])
+    change.add_argument('--new-group', choices=['yes', 'no'])
+    change.add_argument('--start-after')
     sub.add_parser('setup-review', help='Review profile facts before confirming')
     c = sub.add_parser('setup-confirm')
     c.add_argument('--confirm-reviewed', action='store_true')
@@ -364,6 +426,8 @@ def main(argv=None):
         root = root_private(args.workspace)
         if args.command == 'setup':
             result = setup(args, root)
+        elif args.command == 'setup-update':
+            result = setup_update(args, root)
         elif args.command == 'setup-review':
             result = setup_review(root)
         elif args.command == 'setup-confirm':
