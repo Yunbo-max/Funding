@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="700" viewBox="0 0 1600 700" role="img" aria-labelledby="typesTitle typesDesc">
+<title id="typesTitle">Different funding schemes need different application arguments</title>
+<desc id="typesDesc">Five scheme-specific writing patterns for fellowships, research project grants, collaborative consortia, innovation grants, and research impact awards. Each emphasizes a different reviewer question and evidence set. Exact funder rules always govern.</desc>
+<defs><linearGradient id="typesBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0B1830"/><stop offset="100%" stop-color="#172C46"/></linearGradient></defs>
+<rect width="1600" height="700" rx="22" fill="url(#typesBg)"/>
+<text x="47" y="73" fill="#F1F6FD" font-family="Inter,Arial,sans-serif" font-size="39" font-weight="780">ONE RESEARCHER. FIVE PROPOSAL STRATEGIES.</text>
+<text x="49" y="114" fill="#BACDE6" font-family="Inter,Arial,sans-serif" font-size="21">The same CV must tell a different, evidence-backed story for each funding scheme.</text>
+<g transform="translate(45 169)"><rect width="287" height="418" rx="19" fill="#152845" stroke="#8AAAF9" stroke-opacity=".62" stroke-width="1.6"/><rect x="17" y="18" width="253" height="7" rx="3" fill="#8AAAF9"/>
+ <text x="19" y="63" fill="#F1F6FE" font-family="Inter,Arial,sans-serif" font-weight="790" font-size="26">FELLOWSHIP</text>
+ <text x="19" y="89" fill="#AABFDA" font-family="Inter,Arial,sans-serif" font-size="16">Fund the researcher</text>
+ <path d="M19 113 H269" stroke="#3B536F" stroke-width="1"/>
+ <text x="19" y="143" fill="#8AAAF9" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="780" letter-spacing="1.5">REVIEWER ASKS</text>
+ <text x="19" y="172" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="17">Why this researcher?</text>
+ <text x="19" y="196" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="17">Why this career moment?</text>
+ <text x="19" y="240" fill="#8AAAF9" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="780" letter-spacing="1.5">NARRATIVE ARC</text>
+ <text x="19" y="270" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="17">Independence → vision</text>
+ <text x="19" y="296" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="16">Aims → development → host</text>
+ <text x="19" y="343" fill="#8AAAF9" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="780" letter-spacing="1.5">EVIDENCE TO BRING</text>
+ <text x="19" y="369" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="16">CV · publications</text>
+ <text x="19" y="391" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="16">Mentor / host support</text>
+ </g>
+<g transform="translate(350 169)"><rect width="287" height="418" rx="19" fill="#152845" stroke="#66D8C6" stroke-opacity=".62" stroke-width="1.6"/><rect x="17" y="18" width="253" height="7" rx="3" fill="#66D8C6"/>
+ <text x="19" y="63" fill="#F1F6FE" font-family="Inter,Arial,sans-serif" font-weight="790" font-size="23">PROJECT GRANT</text>
+ <text x="19" y="89" fill="#AABFDA" font-family="Inter,Arial,sans-serif" font-size="16">Fund the research question</text>
+ <path d="M19 113 H269" stroke="#3B536F" stroke-width="1"/>
+ <text x="19" y="143" fill="#66D8C6" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="780" letter-spacing="1.5">REVIEWER ASKS</text>
+ <text x="19" y="172" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="17">Why this problem?</text>
+ <text x="19" y="196" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="17">Why is the approach sound?</text>
+ <text x="19" y="240" fill="#66D8C6" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="780" letter-spacing="1.5">NARRATIVE ARC</text>
+ <text x="19" y="270" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="17">Gap → hypothesis → method</text>
+ <text x="19" y="296" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="16">Baselines → risks → budget</text>
+ <text x="19" y="343" fill="#66D8C6" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="780" letter-spacing="1.5">EVIDENCE TO BRING</text>
+ <text x="19" y="369" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="16">Research evidence</text>
+ <text x="19" y="391" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="16">Costs · feasibility</text>
+ </g>
+<g transform="translate(655 169)"><rect width="287" height="418" rx="19" fill="#152845" stroke="#EFCB86" stroke-opacity=".62" stroke-width="1.6"/><rect x="17" y="18" width="253" height="7" rx="3" fill="#EFCB86"/>
+ <text x="19" y="63" fill="#F1F6FE" font-family="Inter,Arial,sans-serif" font-weight="790" font-size="26">CONSORTIUM</text>
+ <text x="19" y="89" fill="#AABFDA" font-family="Inter,Arial,sans-serif" font-size="16">Fund a collaborating team</text>
+ <path d="M19 113 H269" stroke="#3B536F" stroke-width="1"/>
+ <text x="19" y="143" fill="#EFCB86" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="780" letter-spacing="1.5">REVIEWER ASKS</text>
+ <text x="19" y="172" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="17">Why these partners?</text>
+ <text x="19" y="196" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="17">What will they deliver?</text>
+ <text x="19" y="240" fill="#EFCB86" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="780" letter-spacing="1.5">NARRATIVE ARC</text>
+ <text x="19" y="270" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="17">Shared challenge → roles</text>
+ <text x="19" y="296" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="16">Work packages → governance</text>
+ <text x="19" y="343" fill="#EFCB86" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="780" letter-spacing="1.5">EVIDENCE TO BRING</text>
+ <text x="19" y="369" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="16">Letters · partner roles</text>
+ <text x="19" y="391" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="16">Consortium agreement</text>
+ </g>
+<g transform="translate(960 169)"><rect width="287" height="418" rx="19" fill="#152845" stroke="#EF9B96" stroke-opacity=".62" stroke-width="1.6"/><rect x="17" y="18" width="253" height="7" rx="3" fill="#EF9B96"/>
+ <text x="19" y="63" fill="#F1F6FE" font-family="Inter,Arial,sans-serif" font-weight="790" font-size="26">INNOVATION</text>
+ <text x="19" y="89" fill="#AABFDA" font-family="Inter,Arial,sans-serif" font-size="16">Fund translation &amp; adoption</text>
+ <path d="M19 113 H269" stroke="#3B536F" stroke-width="1"/>
+ <text x="19" y="143" fill="#EF9B96" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="780" letter-spacing="1.5">REVIEWER ASKS</text>
+ <text x="19" y="172" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="17">Who needs this?</text>
+ <text x="19" y="196" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="17">Can the project deliver?</text>
+ <text x="19" y="240" fill="#EF9B96" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="780" letter-spacing="1.5">NARRATIVE ARC</text>
+ <text x="19" y="270" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="17">Use case → milestones</text>
+ <text x="19" y="296" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="16">Validation → IP → impact</text>
+ <text x="19" y="343" fill="#EF9B96" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="780" letter-spacing="1.5">EVIDENCE TO BRING</text>
+ <text x="19" y="369" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="16">Users / partners</text>
+ <text x="19" y="391" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="16">TRL · commercial evidence</text>
+ </g>
+<g transform="translate(1265 169)"><rect width="287" height="418" rx="19" fill="#152845" stroke="#BDABF8" stroke-opacity=".62" stroke-width="1.6"/><rect x="17" y="18" width="253" height="7" rx="3" fill="#BDABF8"/>
+ <text x="19" y="63" fill="#F1F6FE" font-family="Inter,Arial,sans-serif" font-weight="790" font-size="26">IMPACT AWARD</text>
+ <text x="19" y="89" fill="#AABFDA" font-family="Inter,Arial,sans-serif" font-size="16">Reward proven external impact</text>
+ <path d="M19 113 H269" stroke="#3B536F" stroke-width="1"/>
+ <text x="19" y="143" fill="#BDABF8" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="780" letter-spacing="1.5">REVIEWER ASKS</text>
+ <text x="19" y="172" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="17">What has changed?</text>
+ <text x="19" y="196" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="17">For which beneficiaries?</text>
+ <text x="19" y="240" fill="#BDABF8" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="780" letter-spacing="1.5">NARRATIVE ARC</text>
+ <text x="19" y="270" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="17">Outcome → attribution</text>
+ <text x="19" y="296" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="16">Evidence → lasting benefit</text>
+ <text x="19" y="343" fill="#BDABF8" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="780" letter-spacing="1.5">EVIDENCE TO BRING</text>
+ <text x="19" y="369" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="16">Testimonials · metrics</text>
+ <text x="19" y="391" fill="#F0F5FF" font-family="Inter,Arial,sans-serif" font-size="16">External adoption evidence</text>
+ </g>
+<rect x="45" y="616" width="1517" height="52" rx="13" fill="#233E60"/>
+<circle cx="73" cy="641" r="6" fill="#66D7C6"/>
+<text x="92" y="649" font-family="Inter,Arial,sans-serif" fill="#E2EDFA" font-size="18">Every application still follows the exact current call's eligibility, assessment criteria, forms, budget rules and deadline.</text>
+</svg>
