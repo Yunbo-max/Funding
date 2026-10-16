@@ -20,7 +20,7 @@
   <text x="17" y="320" font-family="Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="1.4" fill="#385D50">NARRATIVE</text>
   <text x="17" y="345" font-family="Arial,sans-serif" font-size="16" fill="#3C493E">An independent vision</text>
   <text x="17" y="369" font-family="Arial,sans-serif" font-size="16" fill="#3C493E">and development plan.</text>
-  <text x="17" y="397" font-family="Arial,sans-serif" font-size="13" fill="#657063">Track record · mentor and eligible host.</text>
+  <text x="17" y="397" font-family="Arial,sans-serif" font-size="13" fill="#657063">CV record · mentor · host</text>
 </g><g transform="translate(352 199)">
   <rect width="283" height="412" fill="#ECE9DE"/>
   <rect x="0" y="0" width="283" height="7" fill="#B65B43"/>
@@ -35,7 +35,7 @@
   <text x="17" y="320" font-family="Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="1.4" fill="#B65B43">NARRATIVE</text>
   <text x="17" y="345" font-family="Arial,sans-serif" font-size="16" fill="#3C493E">Hypothesis, method,</text>
   <text x="17" y="369" font-family="Arial,sans-serif" font-size="16" fill="#3C493E">strong comparisons.</text>
-  <text x="17" y="397" font-family="Arial,sans-serif" font-size="13" fill="#657063">Actual work · feasibility and eligible budget.</text>
+  <text x="17" y="397" font-family="Arial,sans-serif" font-size="13" fill="#657063">Methods · costs · feasibility</text>
 </g><g transform="translate(652 199)">
   <rect width="283" height="412" fill="#EFEBE0"/>
   <rect x="0" y="0" width="283" height="7" fill="#9B8056"/>
@@ -50,7 +50,7 @@
   <text x="17" y="320" font-family="Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="1.4" fill="#9B8056">NARRATIVE</text>
   <text x="17" y="345" font-family="Arial,sans-serif" font-size="16" fill="#3C493E">Shared aims, partner roles,</text>
   <text x="17" y="369" font-family="Arial,sans-serif" font-size="16" fill="#3C493E">governance and outputs.</text>
-  <text x="17" y="397" font-family="Arial,sans-serif" font-size="13" fill="#657063">Documented commitments and work packages.</text>
+  <text x="17" y="397" font-family="Arial,sans-serif" font-size="13" fill="#657063">Partner roles · support letters</text>
 </g><g transform="translate(952 199)">
   <rect width="283" height="412" fill="#ECE9DE"/>
   <rect x="0" y="0" width="283" height="7" fill="#537E70"/>
@@ -65,7 +65,7 @@
   <text x="17" y="320" font-family="Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="1.4" fill="#537E70">NARRATIVE</text>
   <text x="17" y="345" font-family="Arial,sans-serif" font-size="16" fill="#3C493E">Delivery, validation,</text>
   <text x="17" y="369" font-family="Arial,sans-serif" font-size="16" fill="#3C493E">milestones and IP.</text>
-  <text x="17" y="397" font-family="Arial,sans-serif" font-size="13" fill="#657063">Evidence of user need and realistic pilots.</text>
+  <text x="17" y="397" font-family="Arial,sans-serif" font-size="13" fill="#657063">User need · pilots · IP</text>
 </g><g transform="translate(1252 199)">
   <rect width="283" height="412" fill="#EFEBE0"/>
   <rect x="0" y="0" width="283" height="7" fill="#A96A4E"/>
@@ -80,7 +80,7 @@
   <text x="17" y="320" font-family="Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="1.4" fill="#A96A4E">NARRATIVE</text>
   <text x="17" y="345" font-family="Arial,sans-serif" font-size="16" fill="#3C493E">Observed external change,</text>
   <text x="17" y="369" font-family="Arial,sans-serif" font-size="16" fill="#3C493E">beneficiaries, attribution.</text>
-  <text x="17" y="397" font-family="Arial,sans-serif" font-size="13" fill="#657063">Independent impact documentation.</text>
+  <text x="17" y="397" font-family="Arial,sans-serif" font-size="13" fill="#657063">External evidence · attribution</text>
 </g>
 <line x1="56" y1="638" x2="1537" y2="638" stroke="#B5B6A9" stroke-width="1.2"/>
 <text x="58" y="669" font-family="Georgia,serif" font-size="18" fill="#505E51">Start with the published criteria. Write only claims the researcher can support.</text>
