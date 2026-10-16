@@ -1,144 +1,125 @@
 <p align="center">
-  <img src="assets/hero.svg" alt="Funding Autopilot: from research ideas to funding applications" width="100%">
+  <img src="assets/hero.svg" alt="Funding Autopilot — from research ideas to funding applications" width="100%">
 </p>
 
-# Funding Autopilot
+<h1 align="center">Funding Autopilot</h1>
+<p align="center"><strong>Find funding worldwide. Verify eligibility. Prepare the research. Write the application.</strong></p>
+<p align="center">
+  <a href="#quick-start">Quick start</a> ·
+  <a href="#example-input--output">Example</a> ·
+  <a href="docs/USER-WORKFLOW.md">Full guide</a> ·
+  <a href="docs/README.zh-CN.md">中文</a>
+</p>
 
-**CV-grounded funding discovery, eligibility verification, and evidence-backed proposal writing.**
+**Funding Autopilot** is an open-source, CV-grounded **research funding discovery and application workflow**. It is designed for researchers across disciplines and regions: **UK, Europe, US, Canada, Australia, Asia, and beyond** — wherever relevant official funding information can be accessed and the applicant meets the scheme's rules.
 
-Funding Autopilot is an open-source [Agent Skill](https://agentskills.io/specification) for researchers and AI assistants. It starts with an **uploaded CV** and a funding goal, discovers real calls on official funder websites, checks applicant and host eligibility, and drafts funder-specific applications with auditable evidence. It is a skill for an AI host with search and document-reading tools, **not** a live grant database or a background service.
+Find individual fellowships, independent research grants, **opportunities with a new PI/host**, collaborative funding, research awards, and other relevant calls. It does not assume you must remain in your current research group.
 
-> **Important:** A topic match is not an eligibility decision. An applicant who has *submitted a PhD thesis* has not necessarily been *awarded a PhD*. A different PI, mentor or host institution may be possible, but requires call-specific and institutional verification.
+> **Worldwide by design, not a worldwide live database.** With web access, an AI agent can research the official funding sources for the countries you select. The bundled standalone discovery connector currently covers **UKRI's recent RSS feed only**; other regions depend on the agent's web/search tools or additional source adapters. Coverage and eligibility vary by scheme.
 
-## The workflow: Setup → Search → Match → Prepare → Apply → Track
+## What makes it different?
 
-![Funding Autopilot six-stage workflow](assets/workflow.svg)
+- **Researcher-first, not keyword-first.** Your uploaded CV, actual achievements, career stage, research goals, desired location, salary needs, and independence preference inform the search.
+- **Eligibility before ranking.** The agent checks the *specific official call and round*: who can apply, thesis submitted vs PhD awarded, individual vs PI-led routes, new host requirements, salary eligibility, and the **institutional deadline** as well as the funder's deadline.
+- **Prepare before Apply.** It doesn't leap from “good match” to generic grant text. It develops a defensible research question, an evidence-backed approach, milestones, evaluation, PI/host plan, budget assumptions, and an outline for every required funder section.
+- **Evidence → draft → critical review.** Proposals reuse verified CV facts, follow the actual funder form, surface missing evidence, and go through compliance/scientific review. Nothing is marked submitted or funded without real confirmation.
 
-**Prepare is a real step, not a renamed Apply.** Matching identifies a suitable funding call; preparation builds its research strategy, CV-evidence map, PI/Host approach, budget assumptions and required-section outlines. An applicant-reviewed preparation plan is required before application drafting begins.
+## The workflow
 
-## Quick start: six stages
+![Setup → Search → Match → Prepare → Apply → Track](assets/workflow.svg)
 
-The **v0.3 user workbench** follows a familiar application flow inspired by [ai-job-search](https://github.com/MadsLorentzen/ai-job-search). It is suitable for any research area and region, not one CV or university. A required **uploaded CV** powers personal search and funder-specific writing, while all personal state stays out of this public repository.
+| Step | Decision / output |
+| --- | --- |
+| **`/setup`** | Upload CV → save a private, user-reviewed research profile |
+| **`/search`** | Generate targeted searches by field, career stage, funding type, and **country/region** → collect source-linked leads |
+| **`/match`** | Read the official call → separate **eligible / conditional / ineligible / unverified** routes and deadlines |
+| **`/prepare`** | Develop the research strategy, PI/host and budget plan, CV evidence map, and call-specific section outlines → **user reviews** |
+| **`/apply`** | Write the actual proposal sections, criticize and revise, check requirements, generate editable application materials |
+| **`/outcome`** | Record real submissions and decisions, with user confirmation and receipts |
 
-With Claude Code inside this repository, use **`/setup` → `/search` → `/match` → `/prepare` → `/apply` → `/outcome`**. `/rank` remains a backward-compatible alias of `/match`; `/status` shows saved progress. For other Skill-compatible hosts, copy `skills/funding-autopilot/` and request the same process in natural language.
+`/rank` remains an alias of `/match`. `/status` shows saved progress.
 
-The AI host can also save source-located **CV fact cards** (publications, research projects, methods and awards) under `private/cv-facts.json` using `workspace.py setup-facts --input-file private/cv-facts.json`. These records remain unconfirmed until the user reviews them; later drafts may reuse confirmed facts.
+## Quick start
 
-The local Python workbench also provides runnable commands:
-
-```bash
-python3 skills/funding-autopilot/scripts/workspace.py setup --cv "/path/to/CV.pdf" --topics "machine learning,AI agents" --routes independent,new_pi --regions UK,EU
-python3 skills/funding-autopilot/scripts/workspace.py setup-review
-# Only after you personally check the profile:
-python3 skills/funding-autopilot/scripts/workspace.py setup-confirm --confirm-reviewed
-python3 skills/funding-autopilot/scripts/workspace.py search --query "AI,research fellowship"
-python3 skills/funding-autopilot/scripts/workspace.py match
-# After the AI host reads and structures the exact official current-round call:
-python3 skills/funding-autopilot/scripts/workspace.py prepare --key call-VERIFIED-KEY --route independent
-# The AI host fills private/applications/<key>/<route>/preparation.json, with verified CV fact IDs.
-# Only after the applicant reviews the completed research strategy:
-python3 skills/funding-autopilot/scripts/workspace.py prepare-complete --key call-VERIFIED-KEY --confirm-reviewed
-python3 skills/funding-autopilot/scripts/workspace.py apply --key call-VERIFIED-KEY
-```
-
-**Scope:** `search` runs UKRI's recent RSS feed or imports official leads collected by the AI host; multi-funder discovery, source verification and **full narrative writing** require a browsing/writing AI host. The `prepare` CLI creates a private strategy packet and requires applicant-reviewed completion. The `apply` CLI then creates the funder-specific **proposal scaffold**, and the AI host writes and reviews the actual text. Neither part submits an application, emails a PI or starts a background worker. See [the complete walkthrough](docs/USER-WORKFLOW.md).
-
-
-## Prepare before Apply
-
-A research funding application needs more than a topic match. **Prepare** records the chosen research question, distinct method or impact case, feasible evaluation, applicant CV evidence, PI/Host status, salary/budget mechanism, institutional approvals, supporting documents and an outline for every required funder section. The AI host develops the plan in private files; the applicant reviews it; only then does the workbench transition from `preparing` to `prepared`. The application writer cannot skip this stage.
-
-A conditional new-PI opportunity can support **exploratory preparation and concept drafting**, but cannot become submission-ready until actual eligibility and Host commitments are resolved. See [the preparation contract](docs/PREPARATION-CONTRACT.md) and [the full workflow](docs/USER-WORKFLOW.md).
-
-## What it does
-
-1. **CV intake** — requires user-supplied PDF, DOCX, Markdown or text CV; extracts relevant, source-backed achievements and career stage, asks only for consequential missing constraints. Public profile links can supplement but not replace a CV.
-2. **Opportunity discovery** — searches UK/European/US/global funders, discipline-specific schemes, fellowships, independent awards and partner-led grants, using multiple keyword families derived from the CV.
-3. **Eligibility gates** — separates individual applicant, fellowship holder, project lead/PI, team member, mentor, institutional host and employer; tracks PhD submission vs award, nationalities/residence when required, geography, host approval, work eligibility, career limits and all deadlines.
-4. **Explainable shortlisting** — shows only evidence-verified candidates as eligible; classifies conditional, ineligible, expired and unverified calls separately, without treating an unknown as a pass.
-5. **Proposal studio** — prepares research concept notes, funder-specific narrative sections, work packages, impact/pathways, open-science/data plans, budget justifications, cover letters and PI outreach drafts with a requirement-to-evidence trace.
-6. **Review/repair loop** — tests against official call text, word/page limits, required documents, institutional approval, policy and unsupported claims, then revises the exact missing items.
-
-Inspired by the **evidence → decision → review → revision** practices of [Research Autopilot](https://github.com/Yunbo-max/Research_Autopilot), but deliberately independent: **no GitHub Actions, scheduled jobs, workflow runs or external API keys are required**.
-
-## Agent Skills installation
-
-Install the skill directory `skills/funding-autopilot/` in an Agent Skills-compatible host (for example a configured local or project skills directory), then ask:
-
-> Use Funding Autopilot. I uploaded my CV. Find grants or postdoctoral fellowships I could pursue without staying in my current research group, including an independent route and a route with a new PI. Verify actual eligibility and internal deadlines before ranking; draft only for the opportunities I select.
-
-The host needs web/search access to discover *current* opportunities and document-reading support for the uploaded CV. The skill does **not** claim internet discovery can happen from its offline Python helper alone.
-
-For local structured checks (Python 3.10+, standard library), run:
+Open the project in **[Claude Code](https://claude.com/claude-code)**:
 
 ```bash
-python3 skills/funding-autopilot/scripts/funding.py intake --cv path/to/cv.pdf --out private/profile.json
-python3 skills/funding-autopilot/scripts/funding.py shortlist --profile private/profile.json --calls examples/illustrative-calls.json --out private/shortlist.json
-python3 skills/funding-autopilot/scripts/funding.py prepare --call private/verified-call.json --out private/application-draft.md
-python3 skills/funding-autopilot/scripts/funding.py audit --proposal private/proposal.json --call private/verified-call.json
-python3 -m unittest discover -s tests -v
+git clone https://github.com/Yunbo-max/Funding.git
+cd Funding
+claude
 ```
 
-The intake extractor needs `pypdf` for PDF or `python-docx` for DOCX (`pip install -e '.[documents]'`). If either parser is absent, it fails visibly; scanned/image-only PDFs must be checked manually. `intake` yields a conservative **unverified profile** for agent review, not a fabricated career history. The sample calls are fictional and must never be presented as open funding.
-
-## Repository layout
+Then follow the conversation-driven commands:
 
 ```text
-skills/funding-autopilot/
-  SKILL.md                  # agent entry point and gates
-  references/
-    intake-and-privacy.md   # CV evidence and permissions
-    discovery.md            # sources, search, verification
-    eligibility.md          # hard constraints and unknowns
-    proposal-writing.md     # application composition and review
-    records.md              # data contracts and examples
-  assets/
-    source-registry.json    # starting points; not a live calls feed
-    proposal-template.md
-  scripts/funding.py        # local checks; never claims web verification
-tests/test_funding.py
-examples/illustrative-calls.json
-docs/README.zh-CN.md
+/setup     → Upload your CV and review your profile
+/search    → Find opportunities in your selected regions
+/match     → Verify eligibility and choose an application route
+/prepare   → Develop and review a call-specific research plan
+/apply     → Write and review the proposal
+/outcome   → Track the real submission and funding decision
 ```
 
-## Evidence and safety contract
+You can also install [the Agent Skill](skills/funding-autopilot/SKILL.md) in a compatible host and use natural-language requests. **The Python CLI handles local data and checks; the AI host handles online research and substantive proposal writing.** [Full installation instructions](docs/INSTALL.md).
 
-- Every current deadline, eligibility rule, award amount and application format must link to the **specific official call page or official document** and carry a checked-at timestamp. Check departmental/internal submission dates separately; the funder deadline alone is not enough.
-- Distinguish **discovered**, **verified**, **eligible**, **conditional**, **ineligible**, **expired**, **unverified** and **draft/not submission-ready**. Do not infer eligibility from a search snippet or similarity score.
-- Never invent papers, awards, citations, preliminary results, named collaborator commitments, ethics approvals or figures. Unknowns remain explicit `[TO CONFIRM]` or `[EVIDENCE NEEDED]`.
-- Never upload a CV or private proposal to a public repository without explicit approval. The default `private/`, `applications/`, `output/` and `logs/private/` paths are ignored by Git. Logs published to GitHub must be sanitized.
-- Do not submit applications, impersonate a PI, contact hosts or claim an appointment without explicit user authorization. Writing a draft does not establish a funding decision or a job offer.
-- No autonomous recurrence is implied: a real host scheduler must be set up separately when requested.
+## Example: Input → Output
 
-## Development
+<details open>
+<summary><strong>Input: CV + one research goal</strong></summary>
 
-The helper handles deterministic extraction, conservative eligibility classification, and document structure audit. The host agent performs fresh web discovery, reads PDFs/official call documents, reasons about research fit and writes prose. This division keeps source verification separate from automation claims.
+Upload `my-cv.pdf` and tell the agent:
 
-Contributions and new funding-source adapters are welcome. Add test fixtures rather than real CVs. See [the skill](skills/funding-autopilot/SKILL.md) and [Chinese guide](docs/README.zh-CN.md).
+> “I work on trustworthy AI agents and self-improving models. I expect to submit my PhD thesis in November 2026. Find research funding in the UK, Europe, US, Canada, Australia, or Singapore. I want to move to a new research group, and need a route that could pay my salary. Compare independent fellowships with grants led by a new PI. Check real eligibility and deadlines before recommending anything.”
 
-License: MIT.
+</details>
 
-## Stateful application workflow (v0.2)
+<details open>
+<summary><strong>Output A: Explained funding matches</strong></summary>
 
-The system also adopts a staged **setup → discover → rank → apply → outcome** workspace pattern, inspired by [MadsLorentzen/ai-job-search](https://github.com/MadsLorentzen/ai-job-search). This is an independently implemented grant-specific design: unlike job search, *verified funder/PI/host eligibility overrides topic fit*. See [the upstream architecture study](docs/UPSTREAM-DESIGN-STUDY.md), [private ledger specification](skills/funding-autopilot/references/pipeline-records.md), and [command modules](skills/funding-autopilot/commands/).
+*Illustrative output format — **not live opportunities or real eligibility decisions**.*
 
-New (local, non-network) pipeline commands:
+| Route | Example status | What the agent needs to check |
+| --- | --- | --- |
+| Independent fellowship | **Conditional** | Whether a submitted thesis (rather than an awarded PhD) satisfies the call's date rule |
+| Grant led by a new PI | **Conditional** | New PI/host acceptance, institution's internal deadline, and whether researcher salary is an allowable cost |
+| Research prize | **Ineligible (example)** | An explicitly required completed degree or other disqualifying criterion |
 
-```bash
-python3 skills/funding-autopilot/scripts/pipeline.py --state private/ledger.json ingest --input private/discovered-calls.json
-python3 skills/funding-autopilot/scripts/pipeline.py --state private/ledger.json batch --limit 10
-python3 skills/funding-autopilot/scripts/pipeline.py --state private/ledger.json rank --profile private/profile.json
-python3 skills/funding-autopilot/scripts/pipeline.py --state private/ledger.json report --out private/funding-report.html
+For real results, each row also includes the **official source URL, exact rule, funding round, date checked, and next action**. “Conditional” never means “eligible.”
+
+</details>
+
+<details open>
+<summary><strong>Output B: Preparation → application files</strong></summary>
+
+Once you select and verify a real funding round, the agent prepares a research strategy and required documents:
+
+```text
+private/                               # git-ignored; never published
+├── profile.json                       # CV facts, goals, PhD/host status
+├── ledger.json                        # calls, evidence, eligibility, deadlines
+└── applications/
+    └── call-…/independent/
+        ├── preparation.md             # research question, methods, PI, budget
+        ├── preparation.json           # structured plan & CV evidence IDs
+        ├── requirements.md            # official form and approval checklist
+        ├── proposal.md                # funder-specific draft (after Prepare)
+        └── application.json           # status: drafting, NOT submitted
 ```
 
-These tools manage **private leads, evaluations, progress and an offline report**, not live grant scraping or submission. The AI host still has to retrieve and interpret current official funder guidance. Progress transitions that claim submission or an award require explicit confirmation and evidence. The originating job-search project remains MIT-licensed and credited; we do not ship its source files or workflow actions.
+**Prepare** must contain a substantive, applicant-reviewed strategy before **Apply** is unlocked. The AI host then writes and reviews actual proposal text; the Python command alone only creates the section scaffold. Final submission remains a separate, human-authorized action.
 
-### Official-source adapter example
+</details>
 
-UKRI's official Funding Finder includes an RSS feed. An optional stdlib connector now implements bounded, public-feed discovery (not definitive eligibility):
+## Built-in vs agent-powered
 
-```bash
-python3 skills/funding-autopilot/sources/ukri_rss.py search --query "AI" --limit 20
-```
+| Available in the repository | Requires a connected AI host / human |
+| --- | --- |
+| CV text extraction, private profile/ledger, deterministic eligibility checks, preparation gates, draft scaffolds, UKRI RSS lead adapter | Global official-site research, checking current PDFs/FAQs and host rules, scientific reasoning, full proposal writing, document rendering and approvals |
 
-The adapter returns leads with `round=unverified`, `call_status=unknown`, and requires a separate full-call audit. It is tested using synthetic XML; a live outbound RSS fetch has **not** been completed in this environment. See [source adapters](skills/funding-autopilot/sources/README.md). The [EU F&T Portal's public REST API](https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/support/apis) is documented as a possible future adapter, not claimed to be implemented.
+**Privacy:** CVs, unpublished research ideas, budget details, PI correspondence, and proposal drafts remain in local `private/` paths (ignored by Git). The repository includes **no GitHub Actions, workflow runs, automatic email, or grant submission**. A Skill alone cannot run continuously in the background.
+
+## More
+
+[Complete workflow](docs/USER-WORKFLOW.md) · [Preparation contract](docs/PREPARATION-CONTRACT.md) · [Funding source adapters](skills/funding-autopilot/sources/README.md) · [Developer and validation notes](docs/) · [中文说明](docs/README.zh-CN.md)
+
+Inspired by the workflow design of [AI Job Search](https://github.com/MadsLorentzen/ai-job-search) and the evidence-oriented research methodology of [Research Autopilot](https://github.com/Yunbo-max/Research_Autopilot). Independently implemented. **MIT License.**
