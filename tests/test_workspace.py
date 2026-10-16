@@ -110,6 +110,34 @@ class WorkspaceTests(unittest.TestCase):
                     phd_awarded=None,replace=False), self.private)
         self.assertFalse((self.private/'profile.json').exists())
 
+    def test_setup_cv_facts_are_private_and_require_review(self):
+        self.setup_profile()
+        app.setup_confirm(params(confirm_reviewed=True), self.private)
+        file = self.private/'facts.json'
+        file.write_text(json.dumps({'cv_sha256': app.profile_at(self.private)['cv_sha256'],
+              'facts':[{'id':'paper-1','category':'publication','claim':'Example research contribution',
+                        'locator':'CV page 2','source_kind':'cv'}]}))
+        result=app.setup_facts(params(input_file=str(file)),self.private)
+        self.assertEqual(result['added'],1)
+        self.assertEqual(app.setup_facts(params(input_file=str(file)),self.private)['added'],0)
+        self.assertFalse(app.profile_at(self.private)['fields_verified'])
+        self.assertEqual(len(app.setup_review(self.private)['cv_evidence_facts']),1)
+
+    def test_setup_facts_rejects_public_file_and_conflicting_claim(self):
+        self.setup_profile()
+        bad=self.base/'outside.json'
+        bad.write_text(json.dumps([{'id':'p','category':'publication','claim':'Verified paper',
+                                    'locator':'CV p2','source_kind':'cv'}]))
+        with self.assertRaisesRegex(ValueError,'private'):
+            app.setup_facts(params(input_file=str(bad)),self.private)
+        safe=self.private/'in.json'
+        safe.write_text(bad.read_text())
+        app.setup_facts(params(input_file=str(safe)),self.private)
+        safe.write_text(json.dumps([{'id':'p','category':'publication','claim':'Contradictory paper',
+                                    'locator':'CV p2','source_kind':'cv'}]))
+        with self.assertRaisesRegex(ValueError,'Conflicting'):
+            app.setup_facts(params(input_file=str(safe)),self.private)
+
     def test_search_without_cv_rejected(self):
         with self.assertRaisesRegex(ValueError,'setup'):
             app.search(params(input_file=self.base/'missing.json',feed_file=None,limit=20,query=None),self.private)
