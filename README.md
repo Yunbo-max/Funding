@@ -24,6 +24,17 @@ Find individual fellowships, independent research grants, **opportunities with a
 - **Prepare before Apply.** It doesn't leap from “good match” to generic grant text. It develops a defensible research question, an evidence-backed approach, milestones, evaluation, PI/host plan, budget assumptions, and an outline for every required funder section.
 - **Evidence → draft → critical review.** Proposals reuse verified CV facts, follow the actual funder form, surface missing evidence, and go through compliance/scientific review. Nothing is marked submitted or funded without real confirmation.
 
+## How the agent decides
+
+```text
+CV evidence → search by region, field and career stage → official funder rules
+   ├─ Ineligible  → record the reason; explore another scheme or route
+   ├─ Uncertain   → check degree timing, salary, PI/host and internal deadline
+   └─ Eligible    → prepare a testable research plan → write → review → revise
+```
+
+Decisions are **source-linked and revisited when new evidence arrives**, not predicted award probabilities. The workflow runs when you invoke it; it does not silently search or apply in the background.
+
 ## The workflow
 
 ![Setup → Search → Match → Prepare → Apply → Track](assets/workflow.svg)
