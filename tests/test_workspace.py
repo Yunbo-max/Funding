@@ -119,6 +119,17 @@ class WorkspaceTests(unittest.TestCase):
         self.assertEqual(len(pipeline.load_state(self.private/'ledger.json')['calls']),1)
         self.assertEqual(pipeline.load_state(self.private/'ledger.json')['calls'][key]['call']['round'],'2027')
 
+    def test_repeat_discovery_does_not_recreate_unknown_round(self):
+        key = self.seed()
+        leads = self.base/'same-lead.json'
+        leads.write_text(json.dumps([dict(id='demo-fellowship',funder='Fictional Foundation',
+             round='unverified',title='Same feed title',
+             official_url='https://example.org/grants/demo-fellowship')]))
+        result = app.search(params(input_file=leads,feed_file=None,limit=20,query=None),self.private)
+        self.assertEqual(result['added'], [])
+        self.assertEqual(result['needs_round_recheck'], [key])
+        self.assertEqual(len(pipeline.load_state(self.private/'ledger.json')['calls']), 1)
+
     def test_rank_is_role_specific(self):
         self.seed()
         result=app.rank(params(limit=10),self.private)
