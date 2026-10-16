@@ -88,3 +88,23 @@ python3 skills/funding-autopilot/scripts/workspace.py setup-confirm --confirm-re
 ```
 
 Read [the user walkthrough](USER-WORKFLOW.md) for the entire on-demand sequence and safety model. The optional `[documents]` dependency supplies PDF/DOCX CV parsers, but full PDF/DOCX proposal generation uses the authorized AI host's artifact tools. Local tests do not establish live website reachability or platform account access.
+
+## v0.4 — Match, Prepare, Apply
+
+In a supported Claude Code project, the six-stage workflow uses `/setup`, `/search`, `/match`, `/prepare`, `/apply`, and `/outcome`. `/rank` remains compatible as an alias for `/match`.
+
+With the real scheme and CV facts reviewed, first **prepare a grant strategy**:
+
+```bash
+python3 skills/funding-autopilot/scripts/workspace.py match
+python3 skills/funding-autopilot/scripts/workspace.py prepare --key call-VERIFIED-KEY --route independent
+```
+
+The AI host must write real research strategy, section outlines and CV evidence IDs into `private/applications/<key>/<route>/preparation.json` and `preparation.md`, for the user's actual review. Only after the user confirms:
+
+```bash
+python3 skills/funding-autopilot/scripts/workspace.py prepare-complete --key call-VERIFIED-KEY --confirm-reviewed
+python3 skills/funding-autopilot/scripts/workspace.py apply --key call-VERIFIED-KEY
+```
+
+`apply` starts writing the complete proposal from the reviewed plan. Its CLI only scaffolds the specific sections; the agent handles substantive writing and critical review. Neither status grants permission to submit automatically. [Preparation contract](PREPARATION-CONTRACT.md).

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.0 — 2026-10-16
+
+- Added `/match` (with `/rank` alias), a separate `/prepare` command and an explicit applicant-reviewed `prepare-complete` gate ahead of `/apply`.
+- Expanded the private application state graph: selected → preparing → prepared → drafting; recorded funder-specific research strategy, section outlines, confirmed CV evidence facts and PI/Host/budget conditions.
+- `/apply` now refuses to jump straight from matching to proposal drafting; a conditional host may support an exploratory concept but never final submission-ready approval.
+- Added original vector GitHub hero and six-stage workflow illustrations, updated Skill/Claude commands and installation/English/Chinese documentation.
+- Added regression cases targeting bypasses, unsupported evidence, missing outlines, plan confirmation, and new-PI preparation. **Full runtime test execution was not performed in this source update**; see `docs/VALIDATION-0.4.md`.
+
+
 ## 0.3.0 — 2026-10-16
 
 - Added **native Claude Code commands** `/setup`, `/search`, `/rank`, `/apply`, `/outcome`, and `/status` with a unified on-demand researcher application journey.

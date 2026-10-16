@@ -1,6 +1,6 @@
 # Funding Autopilot: user workflow
 
-The goal is to offer the same **setup → search → rank → apply → outcome** user journey that makes [ai-job-search](https://github.com/MadsLorentzen/ai-job-search) practical, while enforcing real academic eligibility and host-institution rules.
+The goal is to offer the same **setup → search → match → prepare → apply → outcome** user journey that makes [ai-job-search](https://github.com/MadsLorentzen/ai-job-search) practical, while enforcing real academic eligibility and host-institution rules.
 
 ## 1. Install and open
 
@@ -68,30 +68,50 @@ python3 skills/funding-autopilot/scripts/pipeline.py --state private/ledger.json
 
 The JSON block above is **structural illustration only**; it is not a live grant. Do not treat RSS links or search summaries as proof of who can apply.
 
-## 4. Verify then rank
+## 4. Verify then match
 
 The agent opens the exact current scheme guidance, derives a full structured call record (including sources and specific current round), and promotes the matching lead:
 
 ```bash
 python3 skills/funding-autopilot/scripts/workspace.py verify \
   --key call-DISCOVERY-KEY --call-file private/official-call.json
-python3 skills/funding-autopilot/scripts/workspace.py rank --limit 20
+python3 skills/funding-autopilot/scripts/workspace.py match --limit 20
 ```
 
 A key changes if `round` changes from `unverified` to the real cycle. **Use the new returned key** for later actions. Check (i) applicant vs PI role, (ii) completed vs expected PhD date, (iii) salary and institution, and (iv) both funder and new-host internal deadlines. `conditional` is not `eligible`; it identifies unresolved approvals or facts.
 
-## 5. Write and review a proposal
+## 5. Prepare (separate from Apply)
+
+After Match, the researcher **selects a funding call and an independent or new-PI route**. The preparation phase then develops the actual scientific and administrative strategy, with no grant submission.
 
 ```bash
-python3 skills/funding-autopilot/scripts/workspace.py apply \
+python3 skills/funding-autopilot/scripts/workspace.py prepare \
   --key call-VERIFIED-KEY --route independent
 ```
 
-This creates a private call-specific scaffold, compliance checklist and application manifest. On `new_pi`, it also creates an **unsent PI outreach draft**. Ask the agent to **actually compose** complete proposal sections, not just return the scaffold. Then request independent reviewer passes, exact funder field limits, actual document rendering and audited `proposal.json`.
+This creates a **private preparation packet**: `preparation.md`, `preparation.json`, `requirements.md` and, for the new-PI route, an unsent `pi-outreach-draft.md`. The AI host should fill the research question, distinctive approach, feasibility and evaluation, CV evidence fact IDs, the specific official form section outlines, host/PI considerations, allowed salary and budget, documents and unresolved approvals.
+
+The CLI deliberately leaves the stage as **preparing**, not prepared. The applicant should actually review the content and relevant issues. With explicit approval and a substantive complete plan:
+
+```bash
+python3 skills/funding-autopilot/scripts/workspace.py prepare-complete \
+  --key call-VERIFIED-KEY --confirm-reviewed
+```
+
+Only then is the status **prepared**, making `/apply` available. Merely creating an empty preparation template does not satisfy this gate. [See precise preparation requirements](PREPARATION-CONTRACT.md).
+
+## 6. Apply: draft and review the actual proposal
+
+```bash
+python3 skills/funding-autopilot/scripts/workspace.py apply \
+  --key call-VERIFIED-KEY
+```
+
+This creates a private call-specific **proposal scaffold**, only after an applicant-reviewed preparation plan. The compliance checklist and new-PI outreach draft were established during Prepare. Ask the agent to **actually compose** complete proposal sections, not just return the scaffold. Then request independent reviewer passes, exact funder field limits, actual document rendering and audited `proposal.json`.
 
 Only after the applicant explicitly confirms all required approvals and the call-specific structured audit passes, `ready --key ... --proposal-json ... --confirm-reviewed` records `draft_ready`. It does **not** submit. `submitted` and grant decisions require external evidence/receipt.
 
-## 6. Track results
+## 7. Track results
 
 ```bash
 python3 skills/funding-autopilot/scripts/workspace.py status

@@ -43,3 +43,13 @@
 注意：Python 工作台本身没有 LLM；UKRI RSS 提供部分自动搜索，其他基金会依赖 Agent 的实时网页访问。生成完整的正文、DOCX/PDF 以及最终提交需对应平台和人工授权；Skill 本身不会调用 GitHub Actions 或启动后台进程。
 
 新版的 `/setup` 会将 CV 中可核实的论文、项目、研究方法、教育经历等事实以 **来源页码/标题 + 用户确认状态** 保存到私有档案中，后续写新的 Funding Proposal 就不需要每次重新解析同一份 CV。对应底层命令为 `workspace.py setup-facts --input-file private/cv-facts.json`，不能把推断的成果标记成已证实。
+
+## 0.4：Match 与 Apply 之间增加独立 Prepare
+
+完整流程是 **`/setup → /search → /match → /prepare → /apply → /outcome`**，原 `/rank` 继续作为 `/match` 的兼容入口。
+
+**Match（匹配）** 核对本轮官方规则、申请人/PI 资格、接收机构及截止日期；**Prepare（准备）** 根据具体 Funding 制定研究问题、创新方法、已有证据、实验与里程碑、各申请栏目的大纲、预算及 PI/Host 联系策略。使用 `workspace.py prepare --key ... --route independent|new_pi` 建立私有准备文件，Agent 撰写实质性计划，用户确认后执行 `workspace.py prepare-complete --key ... --confirm-reviewed`。
+
+**Apply（申请写作）** 必须在准备状态为 `prepared` 后才能启动。Agent 根据已审阅的研究策略写出真实、符合资助方要求的 Proposal、配套材料并进行内容和格式审查；`workspace.py apply` 只生成草稿结构，绝不意味着已经提交。GitHub README 现已加入原创封面和六阶段图片。
+
+所有研究计划、简历及潜在 PI 的邮件草稿放在被 Git 忽略的 `private/`，不会自动发送或公开。

@@ -7,4 +7,4 @@
 5. Compare verified eligible routes by research fit, career independence, personal salary coverage, host feasibility and preparation time. Explain subjective recommendations separately from hard rules. Maintain conditional and ineligible lists with blockers.
 6. Mark excluded and postponed leads in state without deleting them. Reopen past leads only after a new official round/source check. Do not infer undocumented deadlines.
 
-Outcome: a few actionable, source-cited routes plus distinct missing permissions, host contacts and the shortest applicable deadline. User chooses where to invest `apply` effort.
+Outcome: a few actionable, source-cited routes plus distinct missing permissions, host contacts and the shortest applicable deadline. User chooses which verified route to enter `prepare`; preparation is required before Apply.
