@@ -87,6 +87,29 @@ class WorkspaceTests(unittest.TestCase):
         self.assertEqual(app.setup_confirm(params(confirm_reviewed=True),self.private)['status'],
                          'profile_confirmed_by_user')
 
+    def test_setup_update_preserves_cv_and_reopens_review(self):
+        self.setup_profile()
+        app.setup_confirm(params(confirm_reviewed=True), self.private)
+        cv_hash = app.profile_at(self.private)['cv_sha256']
+        result = app.setup_update(params(topics='mechanistic AI,verification',routes=None,
+            goal='new research institute',regions='UK,US',residence=None,
+            expected_thesis=None,submitted_thesis=None,phd_awarded=None,
+            salary='no',new_group='yes',start_after=None), self.private)
+        profile = app.profile_at(self.private)
+        self.assertEqual(result['status'], 'updated_pending_review')
+        self.assertEqual(profile['cv_sha256'], cv_hash)
+        self.assertFalse(profile['fields_verified'])
+        self.assertFalse(profile['preferences']['salary_required'])
+        self.assertTrue(profile['preferences']['avoid_current_group'])
+
+    def test_future_actual_phd_date_rejected_before_cv_write(self):
+        with self.assertRaisesRegex(ValueError, 'in the future'):
+            app.setup(params(cv=str(self.cv), topics='AI agents',routes='independent',
+                    goal=None,residence=None,regions='',new_group=False,salary=False,
+                    start_after=None,expected_thesis=None,submitted_thesis='2999-01-01',
+                    phd_awarded=None,replace=False), self.private)
+        self.assertFalse((self.private/'profile.json').exists())
+
     def test_search_without_cv_rejected(self):
         with self.assertRaisesRegex(ValueError,'setup'):
             app.search(params(input_file=self.base/'missing.json',feed_file=None,limit=20,query=None),self.private)
