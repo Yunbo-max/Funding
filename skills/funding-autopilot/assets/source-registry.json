@@ -7,7 +7,9 @@
       "region": "UK",
       "url": "https://www.ukri.org/opportunity/",
       "kind": "portal",
-      "notes": "Verify each individual call, role and host eligibility"
+      "notes": "Verify each individual call, role and host eligibility",
+      "rss_feed": "https://www.ukri.org/opportunity/feed/",
+      "discovery_adapter": "skills/funding-autopilot/sources/ukri_rss.py"
     },
     {
       "name": "UKRI applicant eligibility guidance",

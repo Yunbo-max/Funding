@@ -63,3 +63,11 @@ python3 skills/funding-autopilot/scripts/verify_grant_pdf.py --pdf private/appli
 The actual maximum page count and required field wording must come from the selected official call. Passing this script **never replaces visually inspecting the rendered PDF**. The `[documents]` extra includes `pypdf`.
 
 Run the full local unit suite with `python3 -m unittest discover -s tests -v`. The six to eight phases described in `skills/funding-autopilot/commands/` are agent instructions, not an automatically installed scheduler.
+
+## Optional UKRI RSS discovery
+
+```bash
+python3 skills/funding-autopilot/sources/ukri_rss.py search --query "machine learning" --limit 20
+```
+
+This contacts UKRI's public RSS URL only when the host permits HTTPS. It searches recently syndicated calls, not the full UKRI funding catalogue; never treat results as verified eligibility. For offline tests use the optional `--xml-file` argument with local fixtures. See [source documentation](../skills/funding-autopilot/sources/README.md).

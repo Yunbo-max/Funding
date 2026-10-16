@@ -90,3 +90,7 @@ Use the appropriate command playbook on demand; all commands inherit the mandato
 - [report / inbox](commands/08-report-and-inbox.md) — private offline dashboard and opt-in approved updates.
 
 When a local runtime exists, use [the private pipeline record contract](references/pipeline-records.md) and `scripts/pipeline.py` for stable dedup, batch selection, distinct application stages, explicit outcome receipts and private report generation. Adapted from concepts in [MadsLorentzen/ai-job-search](https://github.com/MadsLorentzen/ai-job-search); no upstream workflow code or GitHub Actions are imported. A tool's existence does not mean the user has launched a continuing process.
+
+## Source adapter currently bundled
+
+[UKRI official RSS](sources/README.md) provides public lead discovery via `sources/ukri_rss.py search` and cautious `detail` retrieval. Its RSS results are *not verified calls*: send them through the normal current-round official-guidance and internal-deadline gates. The feed covers only currently syndicated entries, not the complete UKRI catalogue. No applicant CV travels in RSS requests.

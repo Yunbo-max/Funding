@@ -88,3 +88,13 @@ python3 skills/funding-autopilot/scripts/pipeline.py --state private/ledger.json
 ```
 
 These tools manage **private leads, evaluations, progress and an offline report**, not live grant scraping or submission. The AI host still has to retrieve and interpret current official funder guidance. Progress transitions that claim submission or an award require explicit confirmation and evidence. The originating job-search project remains MIT-licensed and credited; we do not ship its source files or workflow actions.
+
+### Official-source adapter example
+
+UKRI's official Funding Finder includes an RSS feed. An optional stdlib connector now implements bounded, public-feed discovery (not definitive eligibility):
+
+```bash
+python3 skills/funding-autopilot/sources/ukri_rss.py search --query "AI" --limit 20
+```
+
+The adapter returns leads with `round=unverified`, `call_status=unknown`, and requires a separate full-call audit. It is tested using synthetic XML; a live outbound RSS fetch has **not** been completed in this environment. See [source adapters](skills/funding-autopilot/sources/README.md). The [EU F&T Portal's public REST API](https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/support/apis) is documented as a possible future adapter, not claimed to be implemented.

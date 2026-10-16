@@ -6,15 +6,16 @@ Date: 2026-10-16. All example calls, profiles and receipts used below are fictio
 
 Command: `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p 'test_*.py' -q` on an isolated workspace containing **new v0.2 modules** and their tests.
 
-Observed result: `Ran 22 tests`, `OK`, exit code 0. This covers:
+Observed result after UKRI module: `Ran 31 tests`, `OK`, exit code 0. Earlier, before the adapter, 22 tests passed. This covers:
 - stable round-aware IDs, dedup across discovery sources, provenance preservation and bounded batches;
 - mandatory CV hash, role-specific hard checks, user-confirmed status transitions and receipts;
 - refusal to treat conditional/old calls as submission ready;
 - fail-closed private output paths, path traversal and HTML escaping;
 - JSON state round-trip/atomic write, actual CLI invocation and offline report;
-- PDF page cap, extractable text, unresolved placeholders and visual-review disclaimer.
+- PDF page cap, extractable text, unresolved placeholders and visual-review disclaimer;
+- UKRI RSS XML, malformed/empty feed, official domain allowlist, duplicate normalization, HTML extraction, query filtering and external redirect rejection.
 
-The `rank` integration exercised `funding.py` via an intentionally limited test double for its rule interface. The actual `funding.py` has its **separate 20-test historical test suite** from 0.1, and was not re-run end-to-end as part of these 22. Therefore, **do not report '42 tests passed in a single run'**.
+The `rank` integration exercised `funding.py` via an intentionally limited test double for its rule interface. The actual `funding.py` has its **separate 20-test historical test suite** from 0.1, and was not re-run end-to-end as part of these 31. Therefore, **do not report '51 tests passed in a single run'**.
 
 ## GitHub readback
 
@@ -28,7 +29,7 @@ The repository tree showed zero entries under `.github/workflows/`. GitHub was u
 
 ## Still unverified
 
-- The actual live official-funder search/detail adapter is not implemented or verified.
+- The UKRI RSS adapter has an offline-tested implementation, but live outbound fetch and parse were **not verified** on this restricted host. No other real source adapter was tested.
 - No CV-upload-to-real-call end-to-end trial, grant application form rendering or PDF visual audit against a live scheme has been run.
 - No actual user authorization was collected for sending correspondence or submitting grants. No external grants were applied to.
 - Optional mailbox classification is a command specification, not an installed connector automation.
