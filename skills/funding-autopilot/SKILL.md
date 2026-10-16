@@ -75,3 +75,18 @@ python3 skills/funding-autopilot/scripts/funding.py audit --proposal private/pro
 PDF extraction needs the optional pypdf package; DOCX needs python-docx. A successful intake means *text was extracted*, not that the agent has confirmed career facts. Read [records](references/records.md) before populating the structured JSON.
 
 **Stop rules:** No uploaded CV → no personalized matching/writing. No official call evidence → no verified eligibility claim. No confirmed host when compulsory → not eligible yet. No adequate evidence for a research claim → narrow or mark it missing. User withdrawal or stop → stop.
+
+## Modular application operating system
+
+Use the appropriate command playbook on demand; all commands inherit the mandatory CV/privacy, official-evidence and human-approval gates above:
+
+- [setup](commands/01-setup.md) — private, provenance-backed researcher profile;
+- [discover](commands/02-discover.md) — source adapters, search/dedup, full-call retrieval;
+- [rank](commands/03-rank.md) — bounded triage and independently verified eligibility;
+- [apply](commands/04-apply.md) — exact official form, independent reviewers and rendered-document checks;
+- [outcome](commands/05-outcome.md) — receipts and longitudinal improvement;
+- [add-source](commands/06-add-source.md) — opt-in official portal adapter generation and validation;
+- [expand](commands/07-expand.md) — source-grounded CV augmentation with user approval;
+- [report / inbox](commands/08-report-and-inbox.md) — private offline dashboard and opt-in approved updates.
+
+When a local runtime exists, use [the private pipeline record contract](references/pipeline-records.md) and `scripts/pipeline.py` for stable dedup, batch selection, distinct application stages, explicit outcome receipts and private report generation. Adapted from concepts in [MadsLorentzen/ai-job-search](https://github.com/MadsLorentzen/ai-job-search); no upstream workflow code or GitHub Actions are imported. A tool's existence does not mean the user has launched a continuing process.

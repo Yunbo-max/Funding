@@ -73,3 +73,18 @@ The helper handles deterministic extraction, conservative eligibility classifica
 Contributions and new funding-source adapters are welcome. Add test fixtures rather than real CVs. See [the skill](skills/funding-autopilot/SKILL.md) and [Chinese guide](docs/README.zh-CN.md).
 
 License: MIT.
+
+## Stateful application workflow (v0.2)
+
+The system also adopts a staged **setup → discover → rank → apply → outcome** workspace pattern, inspired by [MadsLorentzen/ai-job-search](https://github.com/MadsLorentzen/ai-job-search). This is an independently implemented grant-specific design: unlike job search, *verified funder/PI/host eligibility overrides topic fit*. See [the upstream architecture study](docs/UPSTREAM-DESIGN-STUDY.md), [private ledger specification](skills/funding-autopilot/references/pipeline-records.md), and [command modules](skills/funding-autopilot/commands/).
+
+New (local, non-network) pipeline commands:
+
+```bash
+python3 skills/funding-autopilot/scripts/pipeline.py --state private/ledger.json ingest --input private/discovered-calls.json
+python3 skills/funding-autopilot/scripts/pipeline.py --state private/ledger.json batch --limit 10
+python3 skills/funding-autopilot/scripts/pipeline.py --state private/ledger.json rank --profile private/profile.json
+python3 skills/funding-autopilot/scripts/pipeline.py --state private/ledger.json report --out private/funding-report.html
+```
+
+These tools manage **private leads, evaluations, progress and an offline report**, not live grant scraping or submission. The AI host still has to retrieve and interpret current official funder guidance. Progress transitions that claim submission or an award require explicit confirmation and evidence. The originating job-search project remains MIT-licensed and credited; we do not ship its source files or workflow actions.
