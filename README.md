@@ -6,6 +6,27 @@ Funding Autopilot is an open-source [Agent Skill](https://agentskills.io/specifi
 
 > **Important:** A topic match is not an eligibility decision. An applicant who has *submitted a PhD thesis* has not necessarily been *awarded a PhD*. A different PI, mentor or host institution may be possible, but requires call-specific and institutional verification.
 
+## Quick start: setup → search → rank → apply
+
+The **v0.3 user workbench** follows a familiar application flow inspired by [ai-job-search](https://github.com/MadsLorentzen/ai-job-search). It is suitable for any research area and region, not one CV or university. A required **uploaded CV** powers personal search and funder-specific writing, while all personal state stays out of this public repository.
+
+With Claude Code inside this repository, use **`/setup`**, **`/search`**, **`/rank`**, **`/apply`**, **`/outcome`**, **`/status`**. For other Skill-compatible hosts, copy `skills/funding-autopilot/` and request the same process in natural language.
+
+The local Python workbench also provides runnable commands:
+
+```bash
+python3 skills/funding-autopilot/scripts/workspace.py setup --cv "/path/to/CV.pdf" --topics "machine learning,AI agents" --routes independent,new_pi --regions UK,EU
+python3 skills/funding-autopilot/scripts/workspace.py setup-review
+# Only after you personally check the profile:
+python3 skills/funding-autopilot/scripts/workspace.py setup-confirm --confirm-reviewed
+python3 skills/funding-autopilot/scripts/workspace.py search --query "AI,research fellowship"
+python3 skills/funding-autopilot/scripts/workspace.py rank
+# After the host independently checks the official call and returns a verified call key:
+python3 skills/funding-autopilot/scripts/workspace.py apply --key call-VERIFIED-KEY --route independent
+```
+
+**Scope:** `search` runs UKRI's recent RSS feed or imports official leads collected by the AI host; multi-funder discovery, source verification and **full narrative writing** require a browsing/writing AI host. The `apply` CLI creates a funder-specific **draft scaffold**, and the AI skill directs the model to write and review the actual text. Neither part submits an application, emails a PI or starts a background worker. See [the complete walkthrough](docs/USER-WORKFLOW.md).
+
 ## What it does
 
 1. **CV intake** — requires user-supplied PDF, DOCX, Markdown or text CV; extracts relevant, source-backed achievements and career stage, asks only for consequential missing constraints. Public profile links can supplement but not replace a CV.
