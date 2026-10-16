@@ -50,25 +50,24 @@ def setup(args, root):
     path = root / 'profile.json'
     if path.exists() and not args.replace:
         raise ValueError('Profile already exists. Use setup-review/setup-confirm, or --replace with a new CV')
+    routes = csv_list(args.routes)
+    if not routes or not set(routes).issubset({'independent', 'new_pi'}):
+        raise ValueError('Routes must be independent and/or new_pi')
+    for value in (args.expected_thesis, args.submitted_thesis, args.phd_awarded, args.start_after):
+        if value:
+            funding.parse_date(value)
     profile = funding.intake(args.cv, path)
     profile['research_terms'] = csv_list(args.topics)
-    profile['preferred_routes'] = csv_list(args.routes)
-    if not profile['preferred_routes'] or not set(profile['preferred_routes']).issubset({'independent', 'new_pi'}):
-        raise ValueError('Routes must be independent and/or new_pi')
+    profile['preferred_routes'] = routes
     profile['residence_country'] = args.residence or None
     profile['expected_phd_submission_on'] = args.expected_thesis or None
     profile['phd_submitted_on'] = args.submitted_thesis or None
     profile['phd_awarded_on'] = args.phd_awarded or None
-    for field in ('expected_phd_submission_on', 'phd_submitted_on', 'phd_awarded_on'):
-        if profile[field]:
-            funding.parse_date(profile[field])
     profile['preferences'] = {'funding_goal': args.goal or 'research funding or fellowship',
                               'avoid_current_group': bool(args.new_group),
                               'salary_required': bool(args.salary),
                               'target_regions': csv_list(args.regions),
                               'start_after': args.start_after or None}
-    if args.start_after:
-        funding.parse_date(args.start_after)
     profile['fields_verified'] = False
     profile['profile_status'] = 'needs_user_review'
     save(path, profile)
@@ -98,7 +97,7 @@ def setup_confirm(args, root):
     profile['profile_status'] = 'user_reviewed'
     profile['confirmed_at'] = moment().isoformat()
     save(root / 'profile.json', profile)
-    return {'status': 'profile_confirmed_by_user', 'next': 'search --source ukri or search --input-file <verified-host-leads.json>'}
+    return {'status': 'profile_confirmed_by_user', 'next': 'search (UKRI RSS) or search --input-file <host-discovered-leads.json>'}
 
 
 def load_adapter():
