@@ -54,6 +54,13 @@ class WorkspaceTests(unittest.TestCase):
     def seed(self):
         self.setup_profile()
         app.setup_confirm(params(confirm_reviewed=True), self.private)
+        facts = self.private/'seed-facts.json'
+        facts.write_text(json.dumps({'cv_sha256': app.profile_at(self.private)['cv_sha256'],
+             'facts': [{'id': 'publication-seed', 'category': 'publication',
+                        'claim': 'Example applicant contributed to machine-learning research.',
+                        'locator': 'CV publication section', 'source_kind': 'cv'}]}))
+        app.setup_facts(params(input_file=str(facts)), self.private)
+        app.setup_confirm(params(confirm_reviewed=True), self.private)
         leads=self.base/'leads.json'
         leads.write_text(json.dumps([dict(id='demo-fellowship',funder='Fictional Foundation',round='unverified',
                                           title='Fictional Research Fellowship',
@@ -64,6 +71,19 @@ class WorkspaceTests(unittest.TestCase):
         full.write_text(json.dumps(call()))
         update=app.verify(params(key=key,call_file=full),self.private)
         return update['key']
+
+    def complete_preparation(self, key, route):
+        app.prepare(params(key=key, route=route), self.private)
+        plan_file = self.private/'applications'/key/route/'preparation.json'
+        plan = json.loads(plan_file.read_text(encoding='utf-8'))
+        plan['research_question'] = 'How can verified autonomy improve research agents under a fixed resource budget?'
+        plan['distinctive_approach'] = 'A distinct, falsifiable method with matched compute and audit-friendly state.'
+        plan['feasibility_and_evaluation'] = 'Compare independent agent trials against robust baselines with reproducible outcomes.'
+        plan['evidence_fact_ids'] = ['publication-seed']
+        plan['section_outlines'] = {k: 'Use original CV evidence, precise project aims, and planned validation.'
+                                    for k in plan['section_outlines']}
+        plan_file.write_text(json.dumps(plan), encoding='utf-8')
+        return app.prepare_complete(params(key=key, confirm_reviewed=True), self.private)
 
     def test_setup_requires_actual_cv_and_is_unreviewed(self):
         result=self.setup_profile()
@@ -167,9 +187,68 @@ class WorkspaceTests(unittest.TestCase):
         self.assertEqual(vals['independent'],'eligible')
         self.assertEqual(vals['new_pi'],'conditional')
 
+    def test_prepare_is_required_before_apply(self):
+        key = self.seed()
+        app.rank(params(limit=10), self.private)
+        with self.assertRaisesRegex(ValueError, 'preparation'):
+            app.apply(params(key=key, route='independent'), self.private)
+
+    def test_prepare_creates_strategy_not_proposal(self):
+        key = self.seed()
+        app.rank(params(limit=10), self.private)
+        output = app.prepare(params(key=key, route='independent'), self.private)
+        self.assertEqual(output['status'], 'preparation_started')
+        self.assertTrue(Path(output['plan']).exists())
+        self.assertTrue(Path(output['preparation_guide']).exists())
+        self.assertFalse((self.private/'applications'/key/'independent'/'proposal.md').exists())
+        self.assertEqual(pipeline.load_state(self.private/'ledger.json')['calls'][key]['stage'], 'preparing')
+        self.assertEqual(app.prepare(params(key=key, route='independent'), self.private)['status'],
+                         'preparation_in_progress')
+
+    def test_prepare_complete_requires_cv_evidence_and_all_sections(self):
+        key = self.seed()
+        app.prepare(params(key=key, route='independent'), self.private)
+        with self.assertRaisesRegex(ValueError, 'strategy incomplete'):
+            app.prepare_complete(params(key=key, confirm_reviewed=True), self.private)
+        plan_file = self.private/'applications'/key/'independent'/'preparation.json'
+        plan = json.loads(plan_file.read_text(encoding='utf-8'))
+        plan.update({'research_question': 'Research question sufficiently specific to be testable.',
+                     'distinctive_approach': 'New technical method with explicit counterfactuals and baselines.',
+                     'feasibility_and_evaluation': 'Plan feasible comparisons and strong baselines with enough power.',
+                     'evidence_fact_ids': ['unconfirmed-fact']})
+        plan['section_outlines'] = {k: 'Each section connects research and CV evidence.' for k in plan['section_outlines']}
+        plan_file.write_text(json.dumps(plan), encoding='utf-8')
+        with self.assertRaisesRegex(ValueError, 'unconfirmed CV'):
+            app.prepare_complete(params(key=key, confirm_reviewed=True), self.private)
+        plan['evidence_fact_ids'] = ['publication-seed']
+        plan['section_outlines']['summary'] = ''
+        plan_file.write_text(json.dumps(plan), encoding='utf-8')
+        with self.assertRaisesRegex(ValueError, 'section outline'):
+            app.prepare_complete(params(key=key, confirm_reviewed=True), self.private)
+
+    def test_preparation_approval_requires_explicit_confirmation(self):
+        key = self.seed()
+        app.prepare(params(key=key, route='independent'), self.private)
+        with self.assertRaisesRegex(ValueError, 'confirmation'):
+            app.prepare_complete(params(key=key, confirm_reviewed=False), self.private)
+
+    def test_match_alias_is_supported(self):
+        key = self.seed()
+        self.assertEqual(app.rank(params(limit=10), self.private)['results'][0]['route'], 'independent')
+        # Matching does not write a premature prepared/drafting stage.
+        self.assertEqual(pipeline.load_state(self.private/'ledger.json')['calls'][key]['stage'],
+                         'discovered')
+
+    def test_prepare_new_pi_outreach_is_unsent(self):
+        key = self.seed()
+        result = app.prepare(params(key=key, route='new_pi'), self.private)
+        self.assertEqual(result['status'], 'preparation_started')
+        self.assertIn('NOT SENT', Path(result['pi_outreach']).read_text(encoding='utf-8'))
+
     def test_apply_creates_scaffold_and_does_not_submit(self):
         key=self.seed()
         app.rank(params(limit=10),self.private)
+        self.complete_preparation(key, 'independent')
         result=app.apply(params(key=key,route='independent'),self.private)
         self.assertEqual(result['status'],'draft_scaffold_created')
         self.assertTrue(Path(result['proposal']).exists())
@@ -180,6 +259,7 @@ class WorkspaceTests(unittest.TestCase):
     def test_conditional_new_pi_only_concept_not_ready(self):
         key=self.seed()
         app.rank(params(limit=10),self.private)
+        self.complete_preparation(key, 'new_pi')
         result=app.apply(params(key=key,route='new_pi'),self.private)
         self.assertEqual(result['status'],'concept_only')
         self.assertTrue(Path(result['pi_outreach']).exists())
@@ -189,6 +269,7 @@ class WorkspaceTests(unittest.TestCase):
     def test_compliance_ready_then_outcome_receipt(self):
         key=self.seed()
         app.rank(params(limit=10),self.private)
+        self.complete_preparation(key, 'independent')
         app.apply(params(key=key,route='independent'),self.private)
         doc=self.private/'proposal.json'
         doc.write_text(json.dumps({'call_id':'demo-fellowship','sections':{'summary':'Verified claim.',
@@ -224,7 +305,7 @@ class WorkspaceTests(unittest.TestCase):
                      official_url='https://example.org/grants/demo-fellowship')]))
         key=app.search(params(input_file=leads,feed_file=None,limit=10,query=None),self.private)['added'][0]
         with self.assertRaisesRegex(ValueError,'unverified'):
-            app.apply(params(key=key,route='independent'),self.private)
+            app.prepare(params(key=key,route='independent'),self.private)
 
 
 if __name__=='__main__':
