@@ -12,6 +12,8 @@ The **v0.3 user workbench** follows a familiar application flow inspired by [ai-
 
 With Claude Code inside this repository, use **`/setup`**, **`/search`**, **`/rank`**, **`/apply`**, **`/outcome`**, **`/status`**. For other Skill-compatible hosts, copy `skills/funding-autopilot/` and request the same process in natural language.
 
+The AI host can also save source-located **CV fact cards** (publications, research projects, methods and awards) under `private/cv-facts.json` using `workspace.py setup-facts --input-file private/cv-facts.json`. These records remain unconfirmed until the user reviews them; later drafts may reuse confirmed facts.
+
 The local Python workbench also provides runnable commands:
 
 ```bash

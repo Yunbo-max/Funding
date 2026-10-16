@@ -28,7 +28,9 @@ python3 skills/funding-autopilot/scripts/workspace.py setup \
 python3 skills/funding-autopilot/scripts/workspace.py setup-review
 ```
 
-The last line displays claims to check, but does not certify them. If and only if the user has reviewed and approved the actual facts:
+To persist the AI's CV-grounded scientific profile, it should also write a **private** `private/cv-facts.json` array of source-located claims about research, education, projects and publications, then run `workspace.py setup-facts --input-file private/cv-facts.json`. This records facts as `proposed_pending_user_confirmation`, never as automatic verified achievements. Use `setup-review` again to inspect them.
+
+The last review step displays claims to check, but does not certify them. If and only if the user has reviewed and approved the actual facts:
 
 ```bash
 python3 skills/funding-autopilot/scripts/workspace.py setup-confirm --confirm-reviewed

@@ -73,3 +73,16 @@ A score is only a heuristic topical/practical fit index and does not estimate fu
 ```
 
 The audit checks section presence/approximate English word count, mandatory attachments, placeholder markers, claim pointers and call ID. It does not fact-check the prose, parse PDFs or establish final submission readiness. Human approval always remains required.
+
+## v0.3 source-located CV facts
+
+In addition to private `research_terms`, `preferences`, `expected_phd_submission_on` and `phd_awarded_on`, the profile records `fact_evidence`, an **append-only, conflict-checked** list. The AI host must generate a private JSON record of CV-derived facts after reading the uploaded file:
+
+```json
+{"cv_sha256": "<hash of the uploaded CV>", "facts": [
+  {"id":"education-1","category":"education","claim":"[replace with CV-supported fact]","source_kind":"cv","locator":"CV page 1 / Education"},
+  {"id":"publication-1","category":"publication","claim":"[replace with CV-supported fact]","source_kind":"cv","locator":"CV page 2 / Publications"}
+]}
+```
+
+Run `workspace.py setup-facts --input-file private/cv-facts.json`; `setup-review` shows the evidence and user `setup-confirm` promotes proposed facts to `user_confirmed`. Re-running a fact ID with the same content is idempotent. A changed claim with an existing ID raises a conflict rather than rewriting source history. `source_kind` may be `cv`, `user` or `public`; no kind automatically certifies a claim. All source-located records stay in ignored private storage, not public GitHub.

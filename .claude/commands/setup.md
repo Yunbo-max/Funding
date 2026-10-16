@@ -15,7 +15,8 @@ python3 skills/funding-autopilot/scripts/workspace.py setup-review
 
 Include `--new-group` only if the applicant wants to leave the current group, `--salary` only if their personal income is part of the objective, and `--expected-thesis YYYY-MM-DD` only for a **planned** thesis submission. A future planned milestone cannot be recorded as an actual submission or award.
 
-4. Present the extracted profile and important open questions. **Do not** automatically run `setup-confirm`. Once the user explicitly approves the facts, run:
+4. **Persist useful CV facts instead of leaving them only in this chat.** Build `private/cv-facts.json` as `{"cv_sha256":"<the uploaded CV hash>","facts":[{"id":"paper-1","category":"publication","claim":"<faithfully supported claim>","locator":"CV page/heading","source_kind":"cv"}]}`. Include evidenced education, publications, projects, experience, awards and methods. This is a *private* file. Run `python3 skills/funding-autopilot/scripts/workspace.py setup-facts --input-file private/cv-facts.json`. Each entry retains a source locator and stays pending user review. Do not convert inferred technical expertise or adoption claims into observed CV facts. Distinguish explicit user corrections from CV statements.
+5. Present the extracted profile, evidence facts and important open questions. **Do not** automatically run `setup-confirm`. Once the user explicitly approves the facts, run:
 
 ```bash
 python3 skills/funding-autopilot/scripts/workspace.py setup-confirm --confirm-reviewed

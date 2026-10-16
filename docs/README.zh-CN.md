@@ -41,3 +41,5 @@
 如需不重复上传 CV 地改变偏好：`workspace.py setup-update --topics "..." --regions "UK,EU" --new-group yes --salary yes`，随后重新审核个人信息。`private/` 中的 CV、申请书、预算、记录不会推送至公共 GitHub。
 
 注意：Python 工作台本身没有 LLM；UKRI RSS 提供部分自动搜索，其他基金会依赖 Agent 的实时网页访问。生成完整的正文、DOCX/PDF 以及最终提交需对应平台和人工授权；Skill 本身不会调用 GitHub Actions 或启动后台进程。
+
+新版的 `/setup` 会将 CV 中可核实的论文、项目、研究方法、教育经历等事实以 **来源页码/标题 + 用户确认状态** 保存到私有档案中，后续写新的 Funding Proposal 就不需要每次重新解析同一份 CV。对应底层命令为 `workspace.py setup-facts --input-file private/cv-facts.json`，不能把推断的成果标记成已证实。

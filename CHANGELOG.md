@@ -4,10 +4,11 @@
 
 - Added **native Claude Code commands** `/setup`, `/search`, `/rank`, `/apply`, `/outcome`, and `/status` with a unified on-demand researcher application journey.
 - Added `skills/funding-autopilot/scripts/workspace.py`: CLI onboarding from an uploaded CV, user-reviewed profile, safe incremental preference edits, UKRI RSS or AI-host sourced lead ingestion, exact round promotion, independent/new-PI route decisions, funder-specific local application folders, PI outreach scaffolds and receipt-backed tracking.
+- Persisted CV-grounded publications, projects, awards, education and research claims as private, source-located facts for user review. Resolved fact IDs are deduplicated and conflicts flagged instead of silently overwritten.
 - Prevented planned doctoral submission/degree award dates from being misrepresented as completed milestones, including future actual dates.
 - Repeated searches of already-verified calls avoid an extra `unverified` duplicate and trigger official round rechecks.
 - Added call-specific ready/audit constraints. A structured draft is not treated as submitted; new PI or host approvals remain explicit.
-- Added 14 new fictional-fixture user-workflow tests. All 14 passed in the isolated local test harness using **interface-equivalent test doubles** for the existing `funding.py` and `pipeline.py`; the old core regression suite and real external source integration were **not** rerun in that same harness. See [validation notes](docs/VALIDATION-0.3.md).
+- Added 16 new fictional-fixture user-workflow tests. All 16 passed in the isolated local test harness using **interface-equivalent test doubles** for the existing `funding.py` and `pipeline.py`; the old core regression suite and real external source integration were **not** rerun in that same harness. See [validation notes](docs/VALIDATION-0.3.md).
 - No GitHub Actions, workflow runs, automatic mailing, unattended schedulers, real grant submissions or public CV files.
 
 ## 0.2.0 — 2026-10-16

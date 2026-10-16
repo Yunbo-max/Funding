@@ -7,11 +7,11 @@ These are **real local commands and assertions**, but the new workspace integrat
 ## Observed local checks
 
 - `python -m py_compile skills/funding-autopilot/scripts/workspace.py`: exit 0.
-- `PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -p 'test_workspace.py' -q` in the isolated test harness: **14 tests passed**, exit 0.
+- `PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -p 'test_workspace.py' -q` in the isolated test harness: **16 tests passed**, exit 0.
 - Explicit CLI smoke commands exercised `workspace.py setup`, `setup-review`, `setup-confirm`, `search --input-file` and `status` using fictional input and verified the output JSON and private profile path; exit 0.
 - GitHub source and test blob SHA readbacks were compared with exact locally tested files during publication.
 
-Covered: CV required, profile review gating, preferences/new-group/salary, incremental no-reupload updates, no silent profile overwrite, future PhD dates rejected, official round migration, repeat-feed dedup, conditional vs eligible role assessment, source/host mismatch, private call-specific draft creation/idempotence, conditional PI only concept, structure/approval ready review, submission receipt and rejection of unverified discovery leads.
+Covered: source-located private CV fact import, contradictions, idempotent fact deduplication, applicant confirmation, CV required, profile review gating, preferences/new-group/salary, incremental no-reupload updates, no silent profile overwrite, future PhD dates rejected, official round migration, repeat-feed dedup, conditional vs eligible role assessment, source/host mismatch, private call-specific draft creation/idempotence, conditional PI only concept, structure/approval ready review, submission receipt and rejection of unverified discovery leads.
 
 ## Known gaps
 
