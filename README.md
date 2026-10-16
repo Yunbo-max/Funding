@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/hero.svg" alt="Funding Autopilot: from research ideas to funding applications" width="100%">
+</p>
+
 # Funding Autopilot
 
 **CV-grounded funding discovery, eligibility verification, and evidence-backed proposal writing.**
@@ -6,11 +10,17 @@ Funding Autopilot is an open-source [Agent Skill](https://agentskills.io/specifi
 
 > **Important:** A topic match is not an eligibility decision. An applicant who has *submitted a PhD thesis* has not necessarily been *awarded a PhD*. A different PI, mentor or host institution may be possible, but requires call-specific and institutional verification.
 
-## Quick start: setup → search → rank → apply
+## The workflow: Setup → Search → Match → Prepare → Apply → Track
+
+![Funding Autopilot six-stage workflow](assets/workflow.svg)
+
+**Prepare is a real step, not a renamed Apply.** Matching identifies a suitable funding call; preparation builds its research strategy, CV-evidence map, PI/Host approach, budget assumptions and required-section outlines. An applicant-reviewed preparation plan is required before application drafting begins.
+
+## Quick start: six stages
 
 The **v0.3 user workbench** follows a familiar application flow inspired by [ai-job-search](https://github.com/MadsLorentzen/ai-job-search). It is suitable for any research area and region, not one CV or university. A required **uploaded CV** powers personal search and funder-specific writing, while all personal state stays out of this public repository.
 
-With Claude Code inside this repository, use **`/setup`**, **`/search`**, **`/rank`**, **`/apply`**, **`/outcome`**, **`/status`**. For other Skill-compatible hosts, copy `skills/funding-autopilot/` and request the same process in natural language.
+With Claude Code inside this repository, use **`/setup` → `/search` → `/match` → `/prepare` → `/apply` → `/outcome`**. `/rank` remains a backward-compatible alias of `/match`; `/status` shows saved progress. For other Skill-compatible hosts, copy `skills/funding-autopilot/` and request the same process in natural language.
 
 The AI host can also save source-located **CV fact cards** (publications, research projects, methods and awards) under `private/cv-facts.json` using `workspace.py setup-facts --input-file private/cv-facts.json`. These records remain unconfirmed until the user reviews them; later drafts may reuse confirmed facts.
 
@@ -22,12 +32,23 @@ python3 skills/funding-autopilot/scripts/workspace.py setup-review
 # Only after you personally check the profile:
 python3 skills/funding-autopilot/scripts/workspace.py setup-confirm --confirm-reviewed
 python3 skills/funding-autopilot/scripts/workspace.py search --query "AI,research fellowship"
-python3 skills/funding-autopilot/scripts/workspace.py rank
-# After the host independently checks the official call and returns a verified call key:
-python3 skills/funding-autopilot/scripts/workspace.py apply --key call-VERIFIED-KEY --route independent
+python3 skills/funding-autopilot/scripts/workspace.py match
+# After the AI host reads and structures the exact official current-round call:
+python3 skills/funding-autopilot/scripts/workspace.py prepare --key call-VERIFIED-KEY --route independent
+# The AI host fills private/applications/<key>/<route>/preparation.json, with verified CV fact IDs.
+# Only after the applicant reviews the completed research strategy:
+python3 skills/funding-autopilot/scripts/workspace.py prepare-complete --key call-VERIFIED-KEY --confirm-reviewed
+python3 skills/funding-autopilot/scripts/workspace.py apply --key call-VERIFIED-KEY
 ```
 
-**Scope:** `search` runs UKRI's recent RSS feed or imports official leads collected by the AI host; multi-funder discovery, source verification and **full narrative writing** require a browsing/writing AI host. The `apply` CLI creates a funder-specific **draft scaffold**, and the AI skill directs the model to write and review the actual text. Neither part submits an application, emails a PI or starts a background worker. See [the complete walkthrough](docs/USER-WORKFLOW.md).
+**Scope:** `search` runs UKRI's recent RSS feed or imports official leads collected by the AI host; multi-funder discovery, source verification and **full narrative writing** require a browsing/writing AI host. The `prepare` CLI creates a private strategy packet and requires applicant-reviewed completion. The `apply` CLI then creates the funder-specific **proposal scaffold**, and the AI host writes and reviews the actual text. Neither part submits an application, emails a PI or starts a background worker. See [the complete walkthrough](docs/USER-WORKFLOW.md).
+
+
+## Prepare before Apply
+
+A research funding application needs more than a topic match. **Prepare** records the chosen research question, distinct method or impact case, feasible evaluation, applicant CV evidence, PI/Host status, salary/budget mechanism, institutional approvals, supporting documents and an outline for every required funder section. The AI host develops the plan in private files; the applicant reviews it; only then does the workbench transition from `preparing` to `prepared`. The application writer cannot skip this stage.
+
+A conditional new-PI opportunity can support **exploratory preparation and concept drafting**, but cannot become submission-ready until actual eligibility and Host commitments are resolved. See [the preparation contract](docs/PREPARATION-CONTRACT.md) and [the full workflow](docs/USER-WORKFLOW.md).
 
 ## What it does
 
@@ -40,7 +61,7 @@ python3 skills/funding-autopilot/scripts/workspace.py apply --key call-VERIFIED-
 
 Inspired by the **evidence → decision → review → revision** practices of [Research Autopilot](https://github.com/Yunbo-max/Research_Autopilot), but deliberately independent: **no GitHub Actions, scheduled jobs, workflow runs or external API keys are required**.
 
-## Quick start
+## Agent Skills installation
 
 Install the skill directory `skills/funding-autopilot/` in an Agent Skills-compatible host (for example a configured local or project skills directory), then ask:
 
