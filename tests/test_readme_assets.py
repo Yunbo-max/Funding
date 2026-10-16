@@ -43,6 +43,25 @@ class ReadmeAssetsTests(unittest.TestCase):
         self.assertIn("UKRI's recent RSS feed", content)
         self.assertIn("We do not claim to be the first", content)
 
+
+    def test_public_readme_is_english_only(self):
+        content = (ROOT / "README.md").read_text(encoding="utf-8")
+        self.assertIsNone(re.search(r"[\u3400-\u9fff]", content))
+        self.assertIn("There are no researchers who cannot secure funding", content)
+        self.assertNotIn("README.zh-CN.md", content)
+
+    def test_illustrations_use_self_contained_editorial_design(self):
+        for name in SVG_NAMES:
+            with self.subTest(name=name):
+                content = (ROOT / "assets" / name).read_text(encoding="utf-8")
+                self.assertIn("#F5F2EA", content, "Use the editorial paper palette")
+                self.assertNotIn("<linearGradient", content)
+                self.assertNotIn("<radialGradient", content)
+                self.assertNotIn("<filter", content)
+                self.assertNotIn("<image", content)
+                self.assertNotIn("http://", content.replace('http://www.w3.org/2000/svg', ''))
+                self.assertIsNone(re.search(r"[\u3400-\u9fff]", content))
+
     def test_no_github_actions_workflows(self):
         workflows = ROOT / ".github" / "workflows"
         self.assertFalse(workflows.exists(), "Funding must not add GitHub Actions workflow files")
