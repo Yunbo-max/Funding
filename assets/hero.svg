@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="760" viewBox="0 0 1600 760" role="img" aria-labelledby="title desc">
+<title id="title">Funding Autopilot — Research funding, from discovery to application</title>
+<desc id="desc">A dark academic AI infrastructure cover with a CV-grounded research funding pipeline and four evidence-based stages.</desc>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#091326"/><stop offset="58%" stop-color="#111F3B"/><stop offset="100%" stop-color="#0B1730"/></linearGradient>
+ <linearGradient id="blue" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#A9BDFF"/><stop offset="100%" stop-color="#73E3C8"/></linearGradient>
+ <linearGradient id="blueBar" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#527CFB"/><stop offset="100%" stop-color="#70D7DC"/></linearGradient>
+ <radialGradient id="ambient"><stop offset="0%" stop-color="#436FE1" stop-opacity=".39"/><stop offset="100%" stop-color="#436FE1" stop-opacity="0"/></radialGradient>
+ <radialGradient id="ambient2"><stop offset="0%" stop-color="#50B6A8" stop-opacity=".29"/><stop offset="100%" stop-color="#50B6A8" stop-opacity="0"/></radialGradient>
+ <pattern id="grid" width="52" height="52" patternUnits="userSpaceOnUse"><path d="M 52 0 L 0 0 0 52" fill="none" stroke="#A5C0FF" stroke-width=".7" opacity=".075"/></pattern>
+ <filter id="shadow" x="-20%" y="-20%" width="150%" height="150%"><feDropShadow dx="0" dy="15" stdDeviation="24" flood-color="#000719" flood-opacity=".5"/></filter>
+</defs>
+<rect width="1600" height="760" fill="url(#bg)"/>
+<rect width="1600" height="760" fill="url(#grid)"/>
+<circle cx="1100" cy="350" r="580" fill="url(#ambient)"/>
+<circle cx="1480" cy="620" r="400" fill="url(#ambient2)"/>
+<g stroke="#6387D7" fill="none" opacity=".18">
+ <circle cx="1342" cy="370" r="290"/><circle cx="1342" cy="370" r="225"/><circle cx="1342" cy="370" r="155"/>
+ <path d="M1342 58 V682 M1030 370 H1590"/>
+</g>
+<g transform="translate(98 88)">
+ <rect width="41" height="41" rx="12" fill="#253B68" stroke="#6384C3" stroke-opacity=".6"/>
+ <path d="M12 23 C16 10 28 10 30 21 C33 32 18 34 13 27 M18 14 L23 28" fill="none" stroke="#A8C2FF" stroke-width="2.6" stroke-linecap="round"/>
+ <circle cx="30" cy="15" r="3.5" fill="#78E6D2"/>
+ <text x="59" y="27" fill="#DDE8FE" font-size="21" letter-spacing="3" font-weight="700" font-family="Inter,Segoe UI,Arial,sans-serif">FUNDING / AUTOPILOT</text>
+</g>
+<text x="99" y="276" fill="#FFFFFF" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="66" font-weight="750" letter-spacing="-2">Research funding,</text>
+<text x="99" y="357" fill="url(#blue)" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="70" font-weight="750" letter-spacing="-2.7">from idea to application.</text>
+<text x="101" y="412" fill="#C2D2F1" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="24">Discover opportunities. Verify eligibility.</text>
+<text x="101" y="448" fill="#C2D2F1" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="24">Prepare rigorously. Write with evidence.</text>
+<g transform="translate(100 508)">
+ <rect width="156" height="41" rx="20" fill="#19375F" stroke="#4166A5" />
+ <circle cx="21" cy="20.5" r="5.5" fill="#82E5D5"/><text x="34" y="27" fill="#E7F0FF" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" font-weight="600">CV-grounded</text>
+ <rect x="169" width="177" height="41" rx="20" fill="#19375F" stroke="#4166A5"/>
+ <circle cx="190" cy="20.5" r="5.5" fill="#A4B8FF"/><text x="203" y="27" fill="#E7F0FF" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" font-weight="600">Source-verified</text>
+ <rect x="359" width="177" height="41" rx="20" fill="#19375F" stroke="#4166A5"/>
+ <circle cx="380" cy="20.5" r="5.5" fill="#FFC992"/><text x="393" y="27" fill="#E7F0FF" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" font-weight="600">Human-controlled</text>
+</g>
+<g filter="url(#shadow)">
+ <rect x="910" y="146" width="564" height="120" rx="22" fill="#192A49" fill-opacity=".95" stroke="#5674AE" stroke-opacity=".7"/>
+ <rect x="910" y="282" width="564" height="120" rx="22" fill="#192A49" fill-opacity=".95" stroke="#5674AE" stroke-opacity=".7"/>
+ <rect x="910" y="418" width="564" height="120" rx="22" fill="#192A49" fill-opacity=".95" stroke="#5674AE" stroke-opacity=".7"/>
+ <rect x="910" y="554" width="564" height="120" rx="22" fill="#192A49" fill-opacity=".95" stroke="#5674AE" stroke-opacity=".7"/>
+</g>
+<g font-family="Inter,Segoe UI,Arial,sans-serif">
+ <g>
+  <rect x="933" y="169" width="65" height="74" rx="16" fill="#28446F"/>
+  <circle cx="965" cy="194" r="11" fill="none" stroke="#9FBAFF" stroke-width="2.7"/>
+  <path d="M946 224 Q965 207 984 224" fill="none" stroke="#9FBAFF" stroke-width="2.7" stroke-linecap="round"/>
+  <text x="1020" y="200" font-size="24" fill="#F8FAFF" font-weight="700">Researcher profile</text>
+  <text x="1020" y="231" font-size="18" fill="#A9BEE1">CV facts, projects and research goals</text>
+  <text x="1426" y="180" text-anchor="end" font-size="13" fill="#8CAADD" letter-spacing="2">01</text>
+ </g>
+ <g>
+  <rect x="933" y="305" width="65" height="74" rx="16" fill="#28446F"/>
+  <circle cx="962" cy="337" r="12" fill="none" stroke="#9FBAFF" stroke-width="2.8"/>
+  <path d="M971 346 L985 360" stroke="#9FBAFF" stroke-width="3.2" stroke-linecap="round"/>
+  <text x="1020" y="336" font-size="24" fill="#F8FAFF" font-weight="700">Funding discovery</text>
+  <text x="1020" y="367" font-size="18" fill="#A9BEE1">Official calls, deadlines and PI eligibility</text>
+  <text x="1426" y="316" text-anchor="end" font-size="13" fill="#8CAADD" letter-spacing="2">02</text>
+ </g>
+ <g>
+  <rect x="933" y="441" width="65" height="74" rx="16" fill="#285365"/>
+  <rect x="951" y="459" width="29" height="37" rx="4" fill="none" stroke="#81EDD9" stroke-width="2.5"/>
+  <path d="M958 471 H974 M958 480 H974 M958 489 H968" stroke="#81EDD9" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="1020" y="472" font-size="24" fill="#F8FAFF" font-weight="700">Preparation &amp; strategy</text>
+  <text x="1020" y="503" font-size="18" fill="#A9BEE1">Research plan, host, evidence and budget</text>
+  <text x="1426" y="452" text-anchor="end" font-size="13" fill="#84CFBE" letter-spacing="2">03</text>
+ </g>
+ <g>
+  <rect x="933" y="577" width="65" height="74" rx="16" fill="#28446F"/>
+  <path d="M951 595 H982 V632 H951 Z M957 605 H974 M957 613 H974 M957 621 H969" fill="none" stroke="#9FBAFF" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="1020" y="608" font-size="24" fill="#F8FAFF" font-weight="700">Proposal &amp; review</text>
+  <text x="1020" y="639" font-size="18" fill="#A9BEE1">Draft, audit and manual submission</text>
+  <text x="1426" y="588" text-anchor="end" font-size="13" fill="#8CAADD" letter-spacing="2">04</text>
+ </g>
+</g>
+<line x1="100" y1="686" x2="1488" y2="686" stroke="#6382B9" stroke-opacity=".4"/>
+<text x="101" y="719" fill="#91AACC" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="16" letter-spacing="1">OPEN SOURCE  •  PRIVATE BY DEFAULT  •  HUMAN-APPROVED SUBMISSION</text>
+</svg>
