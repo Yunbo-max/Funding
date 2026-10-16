@@ -126,6 +126,57 @@ def setup_update(args, root):
             'cv_hash_unchanged': profile['cv_sha256'],
             'next': 'Review with setup-review and confirm with setup-confirm --confirm-reviewed'}
 
+
+def setup_facts(args, root):
+    """Persist CV-grounded facts proposed by an agent, pending applicant review."""
+    profile = profile_at(root)
+    input_path = Path(args.input_file).expanduser().resolve()
+    pipeline.require_private(input_path)
+    payload = funding.read_json(input_path)
+    if isinstance(payload, dict):
+        if payload.get('cv_sha256') and payload['cv_sha256'] != profile['cv_sha256']:
+            raise ValueError('CV version mismatch: facts were prepared for a different CV')
+        facts = payload.get('facts')
+    else:
+        facts = payload
+    if not isinstance(facts, list) or not facts:
+        raise ValueError('Fact import requires nonempty JSON array or {facts:[...]}')
+    stored = list(profile.get('fact_evidence') or [])
+    index = {f['id']: f for f in stored if isinstance(f, dict) and f.get('id')}
+    added = []
+    valid_categories = {'education', 'experience', 'publication', 'project', 'award', 'research_area', 'method', 'other'}
+    for fact in facts:
+        if not isinstance(fact, dict):
+            raise ValueError('Each fact must be an object with ID, category, claim and source locator')
+        fact_id, category = fact.get('id'), fact.get('category')
+        claim, locator = fact.get('claim'), fact.get('locator')
+        source_kind = fact.get('source_kind')
+        if not all(isinstance(x, str) and 0 < len(x.strip()) <= 1024 for x in (fact_id, claim, locator)):
+            raise ValueError('Fact ID, claim and source locator must be nonempty bounded strings')
+        if not fact_id.replace('-', '').replace('_', '').isalnum() or len(fact_id) > 80:
+            raise ValueError('Fact ID requires alphanumeric/hyphen/underscore and <=80 characters')
+        if category not in valid_categories or source_kind not in {'cv', 'user', 'public'}:
+            raise ValueError('Fact category or source_kind unsupported')
+        cleaned = {'id': fact_id, 'category': category, 'claim': claim.strip(),
+                   'locator': locator.strip(), 'source_kind': source_kind,
+                   'review_state': 'proposed_pending_user_confirmation'}
+        if fact_id in index:
+            old = index[fact_id]
+            if any(old.get(k) != cleaned[k] for k in ('category', 'claim', 'locator', 'source_kind')):
+                raise ValueError('Conflicting fact ID: ' + fact_id + '; resolve with the applicant first')
+        else:
+            added.append(cleaned)
+            index[fact_id] = cleaned
+    if added:
+        profile['fact_evidence'] = stored + added
+        profile['fields_verified'] = False
+        profile['profile_status'] = 'needs_user_review_after_facts'
+        save(root / 'profile.json', profile)
+    return {'added': len(added), 'existing': len(facts)-len(added),
+            'total_facts': len(profile.get('fact_evidence') or []),
+            'status': 'pending_user_review' if added else 'no_change',
+            'next': 'Run setup-review, then setup-confirm only after applicant review'}
+
 def setup_review(root):
     profile = profile_at(root)
     fields = ('research_terms', 'preferred_routes', 'residence_country',
@@ -133,6 +184,7 @@ def setup_review(root):
               'fields_verified', 'profile_status')
     return {'cv_uploaded': bool(profile.get('cv_sha256')), 'cv_name': profile.get('cv_file'),
             'extracted_characters': profile.get('text_characters'),
+            'cv_evidence_facts': profile.get('fact_evidence') or [],
             'review_fields': {key: profile.get(key) for key in fields},
             'warning': 'These fields are user-supplied or unreviewed; compare them with your uploaded CV.'}
 
@@ -411,6 +463,8 @@ def main(argv=None):
     change.add_argument('--salary', choices=['yes', 'no'])
     change.add_argument('--new-group', choices=['yes', 'no'])
     change.add_argument('--start-after')
+    facts = sub.add_parser('setup-facts', help='Add CV/publication evidence facts pending user review')
+    facts.add_argument('--input-file', required=True)
     sub.add_parser('setup-review', help='Review profile facts before confirming')
     c = sub.add_parser('setup-confirm')
     c.add_argument('--confirm-reviewed', action='store_true')
@@ -445,6 +499,8 @@ def main(argv=None):
             result = setup(args, root)
         elif args.command == 'setup-update':
             result = setup_update(args, root)
+        elif args.command == 'setup-facts':
+            result = setup_facts(args, root)
         elif args.command == 'setup-review':
             result = setup_review(root)
         elif args.command == 'setup-confirm':
