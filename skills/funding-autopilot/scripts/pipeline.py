@@ -14,11 +14,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlparse
 
-VERSION = '0.2.0'
+VERSION = '0.4.0'
 STAGES = {
     'discovered': {'shortlisted', 'archived'},
     'shortlisted': {'selected', 'archived'},
-    'selected': {'drafting', 'archived'},
+    'selected': {'preparing', 'archived'},
+    'preparing': {'prepared', 'archived'},
+    'prepared': {'drafting', 'preparing', 'archived'},
     'drafting': {'draft_ready', 'archived'},
     'draft_ready': {'submitted', 'drafting', 'archived'},
     'submitted': {'under_review', 'awarded', 'rejected', 'withdrawn'},
@@ -171,7 +173,7 @@ def advance(state: dict, key: str, to_stage: str, route: str | None = None,
     if to_stage not in STAGES.get(old, set()):
         raise ValueError(f'invalid transition: {old} -> {to_stage}')
     active_route = route or record.get('route')
-    if to_stage in {'selected', 'drafting', 'draft_ready', 'submitted'}:
+    if to_stage in {'selected', 'preparing', 'prepared', 'drafting', 'draft_ready', 'submitted'}:
         if active_route not in {'independent', 'new_pi'}:
             raise ValueError('select an independent or new_pi route first')
     if to_stage == 'selected':
@@ -189,6 +191,8 @@ def advance(state: dict, key: str, to_stage: str, route: str | None = None,
         for label, when in (call.get('deadlines') or {}).items():
             if label in {'funder', 'internal'} and when and rules.parse_datetime(when) < datetime.now(timezone.utc):
                 raise ValueError(f'{label} deadline passed; recheck route before continuing')
+    if to_stage == 'prepared' and (not confirmed or not (evidence_ref and evidence_ref.strip())):
+        raise ValueError('preparation requires applicant-reviewed plan and evidence reference')
     if to_stage in OUTCOME_STAGES:
         if not confirmed or not (evidence_ref and evidence_ref.strip()):
             raise ValueError('outcome/submission requires explicit confirmation and receipt reference')
